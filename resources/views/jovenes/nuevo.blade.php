@@ -5,9 +5,8 @@
 @endsection
 
 @section('head')
-    <script type="text/javascript" src="{{url('/js/joven/nuevo.js')}}"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>           
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script> 
+    <script type="text/javascript" src="{{url('/js/joven/nuevo.js')}}"></script>
 @endsection
 
 @section('cabecera')
@@ -17,25 +16,14 @@
 
 @section('contenedor')
   <div class="row">
-    <h4>Nuevo Joven</h4>
+    <h4>Nuevo Registro</h4>
   </div>
   <div class="row">
     @foreach($errors->all() as $error)
       <div class="red-text">{{$error}}</div>
     @endforeach
-    <nav class="clean">
-      <div class="nav-wrapper">
-        <div class="col s12">
-          <a href="#!" class="breadcrumb">Datos de Usuario</a>
-          <a href="#!" class="breadcrumb">Datos de Perfil</a>
-          <a href="#!" class="breadcrumb">Documentos</a>
-        </div>
-      </div>
-    </nav>
-          
-      <!--
+    <form id="form-nj" method="post" action="{{url('/jovenes/registrar')}}" class="col s12" enctype="multipart/form-data">
       <div id="DUsuario" class="col s12">
-        <form id="form-nj" method="post" action="{{url('/jovenes/crear')}}" class="col s12" enctype="multipart/form-data">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <div class="row">
             <div class="col s12">
@@ -45,10 +33,10 @@
               <div class="file-field input-field col s8">
                 <div class="btn" style="background: #BF3364;">
                   <span>Imagen</span>
-                  <input type="file" onchange="readURL(this)">
+                  <input type="file" id="ruta_imagen" name="ruta_imagen" onchange="readURL(this)">
                 </div>
                 <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text" placeholder="Cargar imagen">
+                  <input class="file-path validate" type="text" placeholder="Agrega una imagen">
                 </div>
               </div>
             </div>
@@ -61,8 +49,8 @@
               <label for="password">Contraseña</label>
             </div>
             <div class="input-field col s8">
-              <input id="cpassword" name="cpassword" type="password" class="validate">
-              <label for="cpassword">Confirmar contraseña</label>
+              <input id="confirmar_password" name="confirmar_password" type="password" class="validate">
+              <label for="confirmar_password">Confirmar contraseña</label>
             </div>
             <div class="input-field col s8">
               <input id="curp" name="curp" type="text" class="validate">
@@ -72,226 +60,51 @@
               <a href="https://consultas.curp.gob.mx/CurpSP/inicio2_2.jsp">¿No conoces tu CURP?, ¡Consúltalo aquí!</a>
             </div>
             <div class="input-field col s8">
-              <input id="telefono" name="telefono" type="text" class="validate">
-              <label for="telefono">Telefono</label>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div id="DPerfil" class="col s12">
-        <form id="form-nj" method="post" action="{{url('/jovenes/crear')}}" class="col s12" enctype="multipart/form-data">
-          <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <div class="row">
-            <div class="input-field col s8">
-              <input id="nombre" name="nombre" type="text" class="validate">
-              <label for="nombre">Nombre(s)</label>
+              <input id="nombre" name="nombre" type="text" class="validate" readonly>
+              <label class="label-curp" for="nombre">Nombre(s)</label>
             </div>
             <div class="input-field col s8">
-              <input id="apellido_paterno" name="apellido_paterno" type="text" class="validate">
-              <label for="apellido_paterno">Apellido Paterno</label>
+              <input id="apellido_paterno" name="apellido_paterno" type="text" class="validate" readonly>
+              <label class="label-curp" for="apellido_paterno">Apellido Paterno</label>
             </div>
             <div class="input-field col s8">
-              <input id="apellido_materno" name="apellido_materno" type="text" class="validate">
-              <label for="apellido_materno">Apellido Materno</label>
+              <input id="apellido_materno" name="apellido_materno" type="text" class="validate" readonly>
+              <label class="label-curp" for="apellido_materno">Apellido Materno</label>
             </div>
-            <div class="col s5">
-              <label>Género</label>
-              <select class="browser-default" id="id_genero" name="id_genero" >
-                <option value="1" selected>Masculino</option>
-                <option value="2">Femenino</option>
+            <div class="input-field col s8">
+              <input id="fecha_nacimiento" name="fecha_nacimiento" type="text" class="validate" readonly>
+              <label class="label-curp" for="fecha_nacimiento">Fecha de Nacimiento</label>
+            </div>
+            <div class="col s8">
+              <label class="label-curp">Género</label>
+              <select class="browser-default" id="id_genero" name="genero" readonly>
+              @foreach($generos as $genero)
+                <option value="{{$genero->abreviatura}}">{{$genero->nombre}}</option>
+              @endforeach
               </select>
             </div>
-            <div class="input-field col s8 m6">
-              <input id="fecha_nacimiento" name="fecha_nacimiento" type="date" class="datepicker">
-              <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-            </div>
-            <div class="col s5">
-              <label>Estado de Nacimiento</label>
-              <select class="browser-default" id="id_estado_nacimiento" name="id_estado_nacimiento" >
-                <option value="1" selected>Aguascalientes</option>
-                <option value="2">Baja California</option>
-                <option value="3">Baja California Sur</option>
-                <option value="4">Campeche</option>
-                <option value="5">Chiapas</option>
-                <option value="6">Chihuahua</option>
-                <option value="7">Coahuila</option>
-                <option value="8">Colima</option>
-                <option value="9">Ciudad de México</option>
-                <option value="10">Durango</option>
-                <option value="11">México</option>
-                <option value="12">Guanajuato</option>
-                <option value="13">Guerrero</option>
-                <option value="14">Hidalgo</option>
-                <option value="15">Jalisco</option>
-                <option value="16">Michoacán</option>
-                <option value="17">Morelos</option>
-                <option value="18">Nayarit</option>
-                <option value="19">Nuevo León</option>
-                <option value="20">Oaxaca</option>
-                <option value="21">Puebla</option>
-                <option value="22">Querétaro</option>
-                <option value="23">Quintana Roo</option>
-                <option value="24">San Luis Potosí</option>
-                <option value="25">Sinaloa</option>
+            <div class="col s8">
+              <label class="label-curp">Estado de Nacimiento</label>
+              <select class="browser-default" id="id_estado_nacimiento" name="estado_nacimiento" readonly>
+              @foreach($estados as $estado)
+                <option value="{{$estado->abreviatura}}">{{$estado->nombre}}</option>
+              @endforeach
               </select>
-            </div>
-            <div class="input-field col s8">
-              <input id="email" name="email" type="email" class="validate">
-              <label for="email">Correo electrónico</label>
             </div>
             <div class="input-field col s8">
               <input id="codigo_postal" name="codigo_postal" type="text" class="validate">
               <label for="codigo_postal">Código Postal</label>
             </div>
-            <div class="input-field col s8">
-              <input id="telefono" name="telefono" type="text" class="validate">
-              <label for="telefono">Teléfono</label>
+            <div class="col s3 offset-s5" style="padding-top: 100px;">
+              <i class="waves-effect waves-light btn waves-input-wrapper">
+              <input type="submit" class="waves-button-input" value="Registrar">
+              </i>
             </div>
-            <div class="input-field col s8">
-              <input id="curp" name="curp" type="text" class="validate">
-              <label for="curp">CURP</label>
-            </div>
-            <div class="col s5">
-              <label>Estado</label>
-              <select class="browser-default" id="id_estado" name="id_estado" >
-                <option value="1" selected>Aguascalientes</option>
-                <option value="2">Baja California</option>
-                <option value="3">Baja California Sur</option>
-                <option value="4">Campeche</option>
-                <option value="5">Chiapas</option>
-                <option value="6">Chihuahua</option>
-                <option value="7">Coahuila</option>
-                <option value="8">Colima</option>
-                <option value="9">Ciudad de México</option>
-                <option value="10">Durango</option>
-                <option value="11">México</option>
-                <option value="12">Guanajuato</option>
-                <option value="13">Guerrero</option>
-                <option value="14">Hidalgo</option>
-                <option value="15">Jalisco</option>
-                <option value="16">Michoacán</option>
-                <option value="17">Morelos</option>
-                <option value="18">Nayarit</option>
-                <option value="19">Nuevo León</option>
-                <option value="20">Oaxaca</option>
-                <option value="21">Puebla</option>
-                <option value="22">Querétaro</option>
-                <option value="23">Quintana Roo</option>
-                <option value="24">San Luis Potosí</option>
-                <option value="25">Sinaloa</option>
-              </select>
-            </div>
-            <div class="col s5">
-              <label>Municipio</label>
-              <select class="browser-default" id="id_municipio" name="id_municipio" >
-                <option value="1" selected>Abasolo</option>
-                <option value="2">Acámbaro</option>
-                <option value="3">San Miguel de Allende</option>
-                <option value="4">Apaseo el Alto</option>
-                <option value="5">Apaseo el Grande</option>
-                <option value="6">Atarjea</option>
-                <option value="7">Celaya</option>
-                <option value="8">Manuel Doblado</option>
-                <option value="9">Comonfort</option>
-                <option value="10">Coroneo</option>
-                <option value="11">Cortazar</option>
-                <option value="12">Cuerámaro</option>
-                <option value="13">Doctor Mora</option>
-                <option value="14">Dolores Hidalgo Cuna de la Independencia Nacional 	</option>
-                <option value="15">Guanajuato</option>
-                <option value="16">Huanímaro</option>
-                <option value="17">Irapuato</option>
-                <option value="18">Jaral del Progreso</option>
-                <option value="19">Jerécuaro</option>
-                <option value="20">León</option>
-                <option value="21">Moroleón</option>
-                <option value="22">Ocampo</option>
-                <option value="23">Pénjamo</option>
-                <option value="24">Pueblo Nuevo</option>
-                <option value="25">Purísima del Rincón</option>
-              </select>
-            </div>
-            <div class="col s5">
-              <label>Nivel de Estudios</label>
-              <select class="browser-default" id="id_nivel_estudios" name="id_nivel_estudios" >
-                <option value="1" selected>Primaria</option>
-                <option value="2">Secundaria</option>
-                <option value="3">Preparatoria</option>
-                <option value="4">TSU</option>
-                <option value="5">Universidad</option>
-                <option value="6">Maestría</option>
-                <option value="7">Doctorado</option>
-                <option value="8">Otro</option>
-              </select>
-            </div>
-            <div class="col s5">
-              <label>Pueblo Indígena</label>
-              <select class="browser-default" id="id_pueblo_indigena" name="id_pueblo_indigena" >
-                <option value="1" selected>Otomí</option>
-                <option value="2">Chichimeca Jonaz</option>
-                <option value="3">Náhuatl</option>
-                <option value="4">Mazahua</option>
-                <option value="5">Otro</option>
-              </select>
-            </div>
-            <div class="col s5">
-              <label>Capacidad Diferente</label>
-              <select class="browser-default" id="id_capacidad_diferente" name="id_capacidad_diferente" >
-                <option value="1" selected>Física</option>
-                <option value="2">Sensorial</option>
-                <option value="3">Auditiva</option>
-                <option value="4">Visual</option>
-                <option value="5">Psíquica</option>
-                <option value="6">Intelectual</option>
-                <option value="7">Mental</option>
-              </select>
-            </div>
-            <div class="input-field col s8">
-              <input id="premios" name="premios" type="text" class="validate">
-              <label for="premios">Premios</label>
-            </div>
-            <div class="input-field col s8">
-              <input id="proyectos_sociales" name="proyectos_sociales" type="text" class="validate">
-              <label for="proyectos_sociales">Proyectos Sociales</label>
-            </div>
-            <div class="col s5">
-              <label>Apoyo de Proyectos Sociales</label>
-              <select class="browser-default" id="apoyo_proyectos_sociales" name="apoyo_proyectos_sociales" >
-                <option value="0" selected>No</option>
-                <option value="1">Sí</option>
-              </select>
-            </div>
-            <div class="col s5">
-              <label>Trabaja</label>
-              <select class="browser-default" id="trabaja" name="trabaja" >
-                <option value="0" selected>No</option>
-                <option value="1">Sí</option>
-              </select>
-            </div>
-            <div class="col s5">
-              <label>Programa beneficiario</label>
-              <select class="browser-default" id="id_programa_beneficiario" name="id_programa_beneficiario" >
-                <option value="1" selected>Municipal</option>
-                <option value="2">Estatal</option>
-                <option value="3">Federal</option>
-                <option value="4">Internacional</option>
-              </select>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div id="Documentos" class="col s12">
-        <div class="file-field input-field col s8">
-          <div class="btn" style="background: #BF3364;">
-            <span>Documentos</span>
-            <input type="file" multiple>
-          </div>
-          <div class="file-path-wrapper">
-            <input class="file-path validate" type="text" placeholder="Cargar documentos">
           </div>
         </div>
-      </div>-->
-    </div> 
+      </div>
+    </div>  
+    </form> 
   </div>    
 </div>
 @endsection

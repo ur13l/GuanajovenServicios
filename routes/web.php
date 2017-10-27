@@ -67,10 +67,11 @@ Route::group(['prefix' => 'chat'], function() {
 Route::group(['prefix' => 'jovenes'], function(){
   Route::get('/', 'JovenesController@index');
   Route::get('/nuevo', 'JovenesController@nuevo');
-  Route::post('/crear', 'JovenesController@crear');
+  Route::post('/registrar', 'JovenesController@registrar');
   Route::post('/borrar', 'JovenesController@borrar');
-  Route::get('/editar', 'JovenesController@editar');
   Route::get('/buscar', 'JovenesController@buscar');
+  Route::get('/perfil/{id_usuario}', 'JovenesController@perfil');
+  Route::post('/perfil', 'JovenesController@actualizar');
 });
 
 //Notificaciones

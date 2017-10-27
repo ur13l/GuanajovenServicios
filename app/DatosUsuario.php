@@ -72,7 +72,7 @@ class DatosUsuario extends Model {
     }
 
     public function programaGobierno() {
-        return $this->hasOne('App\ProgramaGobierno', 'id_programa_gobierno', 'id_programa_gobierno');
+        return $this->hasOne('App\ProgramaGobierno', 'id_programa_gobierno', 'id_programa_beneficiario');
     }
 
     public function nivelEstudios() {
@@ -84,6 +84,6 @@ class DatosUsuario extends Model {
     }
 
     public function idiomasAdicionales() {
-        return $this->belongsToMany('App\IdiomaAdicional', 'datos_usuario_idioma','id_datos_usuario', 'id_idioma_adicional')->withPivot('conversacion','lectura','escritura');;
+        return $this->belongsToMany('App\IdiomaAdicional', 'datos_usuario_idioma','id_datos_usuario', 'id_idioma_adicional')->withPivot('conversacion','lectura','escritura');
     }
 }

@@ -11,9 +11,10 @@
         <link rel="stylesheet" href="{{url('/css/lolliclock.css')}}">
         <link rel="stylesheet" href="{{url('/css/toastr.min.css')}}">
         <link rel="stylesheet" href="{{url('/css/nouislider.css')}}">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+        <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script type="text/javascript" src="{{url('js/jquery-1.12.3.js')}}"></script>
+        <script type="text/javascript" src="{{url('js/jquery.validate.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/lolliclock.js')}}"></script>
         <script type="text/javascript" src="{{url('materialize/js/materialize.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/ion.rangeSlider.js')}}"></script>
@@ -23,7 +24,7 @@
         <script type="text/javascript" src="{{url('/js/jquery.twbsPagination.min.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/nouislider.min.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/jquery.twbsPagination.min.js')}}"></script>
-        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <!--<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>-->
         <script type="text/javascript">
             $(document).ready(function(){
                 $(".button-collapse").sideNav();

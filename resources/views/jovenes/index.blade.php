@@ -17,11 +17,11 @@
 
     <!-- Cuerpo del index -->
     <div class="row">
-        <!--<div class="col s1">
+        <div class="col s1">
             <div class="fixed-action-btn">
                 <a class="btn-floating btn-large waves-effect waves-light" style="background: #BF3364" href="{{url('jovenes/nuevo')}}"><i class="material-icons">add</i></a>
             </div>      
-        </div>-->
+        </div>
         <div class="col s4 offset-s8">
             <div class="left-align">
                 <div class="input-field">
@@ -33,7 +33,6 @@
     </div>
 @include('jovenes.lista')
     <!--Modal para eliminar joven-->
-    <!--
     <div id="modal-borrar" class="modal">
         <form action="{{url('/jovenes/borrar')}}" method="post">
             <div class="modal-content">
@@ -47,7 +46,7 @@
                 <input type="submit" href="#" class="waves-effect waves-green btn-flat"  value="Sí" id="yesBtn"/>
             </div>
         </form>
-    </div>-->
+    </div>
 @endsection
 
 

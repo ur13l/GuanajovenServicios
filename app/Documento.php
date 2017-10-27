@@ -29,6 +29,6 @@ class Documento extends Model
     }
 
     public function convocatoria(){
-        return $this->belongsTo('App\Documento', 'id_convocatoria');
+        return $this->belongsTo('App\Convocatoria', 'id_convocatoria');
     }
 }
