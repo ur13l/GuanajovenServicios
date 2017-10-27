@@ -20,6 +20,12 @@ Route::post('/usuarios/login', 'Auth\LoginController@login');
 
 Route::get('/usuarios/logout', 'Auth\LoginController@getlogout');
 
+Route::get('/usuarios/nuevo', 'UsuariosController@nuevo');
+
+Route::post('/usuarios/curp', 'UserApiController@obtenerCurp');
+
+Route::post('/usuarios/obtenerPermisos', 'UsuariosController@obtenerPermisos');
+
 
 //Publicidad
 Route::group(['prefix' => 'publicidad'], function () {
@@ -92,11 +98,11 @@ Route::get('/usuarios', 'UsuariosController@index');
 
 //Eventos
 Route::group(['prefix' => 'eventos'], function () {
-    Route::get('/inicio', 'EventosController@index');
+    Route::get('/inicio', 'EventosController@index')->name('eventos');
     Route::get('/nuevo', 'EventosController@nuevo');
     Route::post('/editar/{idEvento}', 'EventosController@editar');
     Route::post('/eliminar', 'EventosController@eliminar');
-    Route::post('/guardar/{idEvento}', 'EventosController@guardar');
+    Route::post('/guardar', 'EventosController@guardar');
     Route::post('/estadisticas/{idEvento}', 'EventosController@estadistica');
 });
 

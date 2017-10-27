@@ -23,12 +23,7 @@ class Rol extends Model
     ];
 
     public function permisos() {
-        //sdfgsdfsg
-        return $this->belongsToMany('App\Permiso', 'rol_permiso', 'id_rol', 'id_permiso');
-    }
-
-    public function ok() {
-
+        return $this->belongsToMany('App\Permiso', 'rol_permiso')->withPivot('id_permiso')->get();
     }
 
 }

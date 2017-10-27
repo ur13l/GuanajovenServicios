@@ -96,6 +96,7 @@
             </div>
             </p>
         </div>
+
         <div class="modal-footer">
             <input type="submit" value="Guardar" class="waves-effect waves-green btn-flat">
             <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>

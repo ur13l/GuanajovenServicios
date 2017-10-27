@@ -23,7 +23,7 @@
                 <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
             </div>
             <div class="modal-footer">
-                <a href="#" class="modal-action modal-close waves-effect waves-red btn-flat ">Cancelar</a>
+                <a href="#" id="cancelBtn" class="modal-action modal-close waves-effect waves-red btn-flat ">Cancelar</a>
                 <input type="submit" href="#" class="waves-effect waves-green btn-flat"  value="Sí" id="yesBtn"/>
             </div>
         </form>
@@ -35,12 +35,11 @@
             <a href="{{url("/convocatorias/editar/$convocatoria->id_convocatoria")}}">
                 <div class="card">
                     <div class="card-image">
-                        <div class="center-cropped"
-                             >
+                        <div class="center-cropped">
                             <img src="{{$convocatoria->ruta_imagen}}" />
                         </div>
                         <span class="card-title" style="background: black;">{{$convocatoria->titulo}}</span>
-                        <a data-id="{{$convocatoria->id_convocatoria}}" class="btn-floating halfway-fab waves-effect waves-light red right deleteP modal-trigger"><i class="material-icons">clear</i></a>
+                        <a data-id="{{$convocatoria->id_convocatoria}}" class="btn-floating halfway-fab waves-effect waves-light red right deleteP"><i class="material-icons">clear</i></a>
                     </div>
                 </div>
             </a>

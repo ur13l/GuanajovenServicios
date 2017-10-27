@@ -19,7 +19,6 @@ class EventoApiController extends Controller
     public function obtenerEventos(Request $request)
     {
         $timestamp = $request->input('timestamp');
-
         $eventos = Evento::where('updated_at', '>', $timestamp)
             ->orderBy('created_at')
             ->withTrashed()

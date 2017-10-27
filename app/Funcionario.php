@@ -31,15 +31,15 @@ class Funcionario extends Model
     ];
 
     public function usuario() {
-        return $this->hasOne('App\Usuario', 'id_usuario');
+        return $this->hasOne('App\User', 'id', 'id_usuario')->first();
     }
 
     public function rol() {
-        return $this->hasOne('App\Rol', 'id_rol');
+        return $this->hasOne('App\Rol', 'id', 'id_rol')->first();
     }
 
     public function puesto() {
-        return $this->hasOne('App\Puesto', 'id_puesto');
+        return $this->hasOne('App\Puesto', 'id', 'id_puesto')->first();
     }
 
 }

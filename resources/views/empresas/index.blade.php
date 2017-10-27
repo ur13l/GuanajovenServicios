@@ -40,7 +40,7 @@
                             <img src="{{$empresa->logo}}" />
                         </div>
                         <span class="card-title" style="background: black;">{{$empresa->empresa}}</span>
-                        <a data-id="{{$empresa->id_empresa}}" class="btn-floating halfway-fab waves-effect waves-light red right deleteP modal-trigger"><i class="material-icons">clear</i></a>
+                        <a data-id="{{$empresa->id_empresa}}" class="btn-floating halfway-fab waves-effect waves-light red right deleteP"><i class="material-icons">clear</i></a>
                     </div>
                 </div>
             </a>

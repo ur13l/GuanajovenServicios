@@ -23,7 +23,7 @@ class Direccion extends Model
     ];
 
     public function dependencia() {
-        return $this->hasOne('App\Dependencia', 'id_dependencia');
+        return $this->hasOne('App\Dependencia', 'id', 'id_dependencia')->first();
     }
 
 }

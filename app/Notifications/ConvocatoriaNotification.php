@@ -40,13 +40,14 @@ class ConvocatoriaNotification extends Notification
 
         $data = array('id_usuario' => $id_usuario , 'id_convocatoria' => $id_convocatoria , 'curp_usuario' => $curp_usuario , 'nombre_convocatoria' => $nombre_convocatoria);
 
-        //dd($data);
+        $fecha_inicio = $this->convocatoria->fecha_inicio->format("d/m/Y");
+        $fecha_cierre = $this->convocatoria->fecha_cierre->format("d/m/Y");
 
 
         return (new MailMessage)
                     ->line($this->datos_usuario->getAttributeValue('nombre').'.')
                     ->line('Hemos visto que estas interesado en la convocatoria: '.$this->convocatoria->getAttributeValue('titulo').'.')
-                    ->line('Con fechas de: '.$this->convocatoria->getAttributeValue('fecha_inicio').' a '.$this->convocatoria->getAttributeValue('fecha_cierre').'.')
+                    ->line('Con fechas del: '. $fecha_inicio.' al '. $fecha_cierre .'.')
                     ->line('Si estas de acuerdo con ello, favor de oprimir el boton de aceptar, caso contrario has caso omiso a este mensaje.')
             //ingresamos a la url correspondiente con los parametros
 

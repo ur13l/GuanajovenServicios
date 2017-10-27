@@ -20,6 +20,6 @@
         {!! Form::close() !!}
     </td>
     <td class='delete'>
-        <i class='material-icons' style='cursor:pointer'>delete</i>
+        <i class='material-icons deleteP' data-id="{{$evento->id_evento}}" style='cursor:pointer'>delete</i>
     </td>
 </tr>

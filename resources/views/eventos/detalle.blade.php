@@ -20,9 +20,10 @@
         <div id="map" style="height: 100%;"></div>
     </div>
     <div class="row">
-        <form class="col s12" action="{{ url('/eventos/guardar/' . $evento->id_evento) }}" method="post" id="form-nuevo-evento">
+        <form class="col s12" action="{{ url('/eventos/guardar') }}" method="post" id="form-nuevo-evento">
             <input type="hidden" id="posicion" name="posicion" value="">
             <input type="hidden" id="accion" name="accion" value="{{$accion}}">
+            <input type="hidden" id="id_evento" name="id_evento" value="{{$evento->id_evento}}">
             <div class="row">
                 <div class="input-field col s12">
                     <input id="titulo" type="text" class="vald" name="titulo" value="{{ $evento->titulo }}" required>
@@ -42,7 +43,7 @@
                     <label for="fecha-inicio">Fecha de inicio</label>
                 </div>
                 <div class="input-field col s6">
-                    <input id="hora-inicio" type="text" class="timepicker vald" value="{{ $hora_inicio }}" name="hora_inicio" required>
+                    <input id="hora-inicio" type="text" class="timepicker vald" value="{{ date_format(date_create($hora_inicio), 'H:i') }}" name="hora_inicio" required>
                     <label for="hora-inicio">Hora de inicio</label>
                 </div>
             </div>
@@ -52,7 +53,7 @@
                     <label for="fecha-fin">Fecha de finalización</label>
                 </div>
                 <div class="input-field col s6">
-                    <input id="hora-fin" type="text" class="timepicker vald" value="{{ $hora_fin }}" name="hora_fin" required>
+                    <input id="hora-fin" type="text" class="timepicker vald" value="{{ date_format(date_create($hora_fin), 'H:i') }}" name="hora_fin" required>
                     <label for="hora-fin">Hora de finalización</label>
                 </div>
             </div>
@@ -66,12 +67,13 @@
                     <label for="area-responsable">Área responsable</label>
                 </div>
             </div>
+
             <div class="row">
                 <div class="input-field col s12">
                     <select required id="tipo-evento" name="tipo-evento" class="validate">
                         <option value="" disabled>Elige una opción</option>
                         @foreach($tipos as $tipo)
-                            @if($evento->id_tipo_evento == $tipo->id_tipo_evento) 
+                            @if($evento->id_tipo_evento == $tipo->id_tipo_evento)
                              <option value="{{$tipo->id_tipo_evento}}" selected>{{$tipo->nombre}}</option>
                             @else
                              <option value="{{$tipo->id_tipo_evento}}">{{$tipo->nombre}}</option>
@@ -82,6 +84,7 @@
                     <input type="hidden" name="tipo-seleccionado" val="{{$evento->id_tipo_evento}}" id="tipo-seleccionado">
                 </div>
             </div>
+
             <div class="row">
                 <button type="button" class="waves-effect waves-light btn rose-code" id="guardar-evento" style="background: #BF3364;">
                     <i class="material-icons left">library_books</i>Guardar

@@ -22,7 +22,7 @@ class Puesto extends Model{
     ];
 
     public function area() {
-        return $this->hasOne('App\Area', 'id_area');
+        return $this->hasOne('App\Area', 'id', 'id_area')->first();
     }
 
 }

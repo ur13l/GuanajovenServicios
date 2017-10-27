@@ -113,7 +113,7 @@ class ConvocatoriasController extends Controller {
 
         foreach ($documentos as $documento) {
             if ($documento->isValid()) {
-                $rutaDoc = FileUtils::guardar($documento, 'storage/docs', 'doc_');
+                $rutaDoc = FileUtils::guardar($documento, 'storage/docs/', 'doc_');
 
                 //Obtener nombre
                 $titulo = $documento->getClientOriginalName();

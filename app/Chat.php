@@ -11,7 +11,6 @@ class Chat extends Model
       protected $primaryKey = 'id_chat';
       use SoftDeletes;
 
-
       protected $fillable = [
           'id_usuario'
       ];

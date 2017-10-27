@@ -11,7 +11,7 @@ $(document).ready(function(){
     labelMonthPrev: 'Anterior',
     labelMonthSelect: 'Selecciona un mes',
     labelYearSelect: 'Selecciona un año',
-    monthsFull: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+    monthsFull: [ 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre' ],
     monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
     weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado' ],
     weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb' ],
@@ -28,6 +28,18 @@ $(document).ready(function(){
     autoclose:true,
     hour24: true
   });
+
+  if(moment($("#fecha-inicio").val()).format("DD MMMM, YYYY") != "Invalid date") {
+    $("#fecha-inicio").val(moment($("#fecha-inicio").val()).format("DD MMMM, YYYY"));
+  }
+  if(moment($("#fecha-fin").val()).format("DD MMMM, YYYY") != "Invalid date"){
+    $("#fecha-fin").val(moment($("#fecha-fin").val()).format("DD MMMM, YYYY"));
+  }
+
+  if(location.href.includes("nuevo")) {
+    $("#hora-inicio").val("");
+    $("#hora-fin").val("");
+  }
 
   //Necesario para sustituir el select común de HTML5 por el de Materialize
    $('select').material_select();
@@ -46,6 +58,7 @@ $(document).ready(function(){
      $(this).removeClass("invalid");
    });
 
+
    //Manejador del botón de eliminar selección
    $("#delete-selection").on('click', function(){
      $("#delete-message").html("¿Confirma que desea eliminar los eventos seleccionados?");
@@ -59,6 +72,7 @@ $(document).ready(function(){
        $('#tipo-seleccionado').val($('#tipo-evento').val());
    });
 
+   /*
    //Eliminar evento
     $('.delete').on('click', function () {
         var item_evento = $(this).parent();
@@ -83,6 +97,7 @@ $(document).ready(function(){
             }
         });
     });
+    */
 
    //Verificar datos y guardar el evento
    $('#guardar-evento').on('click', function () {
@@ -184,5 +199,16 @@ $(document).ready(function(){
             Materialize.toast('Llena todos los campos', 3000, 'red');
         }
    });
+
+   /**
+    * Función index para eliminar
+    */
+    $(".deleteP").click(function(){
+        var btn = $(this),
+            yesButton = null,
+            id;
+        $('#deleteModalEv').openModal();
+        $("#id-eliminar").val(btn.data('id'));
+    });
 });
 

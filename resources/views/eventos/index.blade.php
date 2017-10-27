@@ -13,6 +13,23 @@
 @endsection
 
 @section('contenedor')
+
+    <!--Modal eliminar-->
+    <div id="deleteModalEv" class="modal">
+        <form action="{{url('/eventos/eliminar')}}" method="post">
+            <div class="modal-content">
+                <h4>Confirmar</h4>
+                <p id="delete-message">¿Desea eliminar el evento?</p>
+                <input type="hidden" name="idEvento" id="id-eliminar">
+                <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="modal-action modal-close waves-effect waves-red btn-flat ">Cancelar</a>
+                <input type="submit" href="#" class="waves-effect waves-green btn-flat"  value="Sí" id="yesBtn"/>
+            </div>
+        </form>
+    </div>
+
     <div class="row">
         <table class="highlight">
             <thead>
@@ -99,16 +116,6 @@
         <div class="modal-footer">
             <a href="#!" class=" modal-action waves-effect waves-green btn-flat" id="guardar-evento">Guardar</a>
             <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
-        </div>
-    </div>
-    <div id="deleteModal" class="modal">
-        <div class="modal-content">
-            <h4>Confirmar</h4>
-            <p id="delete-message">¿Desea eliminar el evento seleccionado?</p>
-        </div>
-        <div class="modal-footer">
-            <a href="#" class="waves-effect waves-red btn-flat" onclick="$('#deleteModal').closeModal(); return false;">Cancelar</a>
-            <a href="#" class="waves-effect waves-green btn-flat" onclick="deleteEvents()" id="md1_YesBtn">Sí</a>
         </div>
     </div>
     <div class="fixed-action-btn" style="bottom: 10px; right: 24px;">

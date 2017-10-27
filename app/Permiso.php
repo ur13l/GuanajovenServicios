@@ -20,4 +20,9 @@ class Permiso extends Model
         'updated_at',
         'deleted_at'
     ];
+
+
+    public function roles() {
+        return $this->belongsToMany('App\Rol', 'rol_permiso')->withPivot('id_rol')->get();
+    }
 }

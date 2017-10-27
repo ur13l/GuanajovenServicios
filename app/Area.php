@@ -23,7 +23,7 @@ class Area extends Model
     ];
 
     public function direccion() {
-        return $this->hasOne('App\Direccion', 'id_direccion');
+        return $this->hasOne('App\Direccion', 'id', 'id_direccion')->first();
     }
 
 }
