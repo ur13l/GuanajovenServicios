@@ -132,18 +132,7 @@ class ProfileApiController extends Controller {
         $usuario =  Auth::guard('api')->user();
         $data = null;
         $errors = [];
-      //  $idiomas = [];
-        $datas = array();
-        $idiomas = array();
-        $datosUsuario = DatosUsuario::where("id_usuario", $usuario->id)->first();
-
-          foreach($datosUsuario->idiomasAdicionales as $idiomaadicional){
-                  $idiomas[]= array("id_idioma_adicional" => $idiomaadicional->id_idioma_adicional,
-                  "id_datos_usuario" => $idiomaadicional->pivot->id_datos_usuario,
-                  "conversacion" => $idiomaadicional->pivot->conversacion,
-                  "lectura" => $idiomaadicional->pivot->lectura,
-                  "escritura" => $idiomaadicional->pivot->escritura );
-                }
+      
           if (isset($datosUsuario)) {
             $data = [
                 "ruta_imagen" => $datosUsuario->ruta_imagen,

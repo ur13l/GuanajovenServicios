@@ -80,6 +80,12 @@ Route::group(['prefix' => 'jovenes'], function(){
   Route::post('/perfil', 'JovenesController@actualizar');
 });
 
+//Ordenes de servicio
+Route::group(['prefix' => 'servicios'], function(){
+    Route::get('/', 'ServiciosController@index');
+    Route::get('/nuevo', 'ServiciosController@nuevo');
+});
+
 //Notificaciones
 Route::group(['prefix' => 'notificaciones'], function() {
     Route::get('/', 'NotificacionesController@index')->name('notificaciones');

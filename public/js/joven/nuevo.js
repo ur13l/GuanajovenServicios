@@ -39,7 +39,7 @@ $(function(){
         }
     },
     submitHandler:function(form){
-      $("#fecha_nacimiento").val(moment($("#fecha_nacimiento").val(), "DD MMM, YYYY").format("DD/MM/YYYY"));
+     // $("#fecha_nacimiento").val(moment($("#fecha_nacimiento").val(), "DD MMM, YYYY").format("DD/MM/YYYY"));
       form.submit();
     }
   });

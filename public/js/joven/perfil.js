@@ -53,5 +53,12 @@ $(function () {
         }
     });
 
-    
+    $(".idiomabtn").on('click', function(){
+        var html = $(".row-idioma")[0].outerHTML;
+        $(".row-general").append(html);
+    });
+
+   $(document).on('click', '.borrar-idioma', function(){
+       $(this).closest("div.row").remove();
+   })
 });

@@ -71,6 +71,8 @@ class JovenesController extends Controller
     }
 
     function registrar(Request $request) {
+        $fecha_nacimiento = Carbon::createFromFormat('d/m/Y', $request->input("fecha_nacimiento"))->toDateString();
+        //dd($fecha_nacimiento);        
       $errors = [];
 
       $reglas = [
@@ -298,11 +300,15 @@ class JovenesController extends Controller
      */
      function actualizar(Request $request) {
         $usuario =  User::find($request->input("idUsuario"));
+        $email = $request->input("email");        
+        $usuario->email = $email;
+        $usuario->save();
         $data = null;
         $errors = [];
-
-        $id_estado = $request->input("id_estado");
-        $id_municipio = $request->input("id_municipio");
+        
+        $codigo_postal = $request->input("codigo_postal");
+        //$id_estado = $request->input("id_estado");
+        //$id_municipio = $request->input("id_municipio");
         $id_nivel_estudios = $request->input("id_nivel_estudios");  
         $id_pueblo_indigena = $request->input("id_pueblo_indigena");
         $id_capacidad_diferente = $request->input("id_capacidad_diferente");
@@ -315,6 +321,27 @@ class JovenesController extends Controller
 
         $datosUsuario = DatosUsuario::where("id_usuario", $usuario->id)->first();
 
+        
+        $id_idiomas = $request->input('idioma');
+        $conversacion = $request->input('conversacion');
+        $lectura = $request->input('lectura');
+        $escritura = $request->input('escritura');
+        $idiomas_nuevos = [];
+        $idiomas_viejos = [];
+        $idiomas_actuales = $datosUsuario->idiomasAdicionales;
+        
+        if(count($idiomas_actuales) > 0){
+            for($i = 0; $i < count($idiomas_actuales); $i++){
+                $idiomas_viejos[] = $idiomas_actuales[$i]->id_idioma_adicional;
+            }
+            $datosUsuario->idiomasAdicionales()->detach($idiomas_viejos);
+        }
+
+        for($i = 0; $i < count($id_idiomas); $i++){
+            $idiomas_nuevos[$id_idiomas[$i]] = ['conversacion' => $conversacion[$i], 'lectura' => $lectura[$i], 'escritura' => $escritura[$i]];
+        }
+        $datosUsuario->idiomasAdicionales()->attach($idiomas_nuevos);
+
         //Imagen
         $ruta_imagen = '';
         ImageController::eliminarImagen($datosUsuario->ruta_imagen);
@@ -324,11 +351,25 @@ class JovenesController extends Controller
             $ruta_imagen = url(ImageController::guardarImagen($datos, $ruta, uniqid("usuario_")));
         }
 
+        $id_estado = "";
+        $id_municipio = "";
+        $codigo_postal = $request->input("codigo_postal");
+        if (isset($codigo_postal)) {
+            $objeto = $this->obtenerEstadoMunicipio($codigo_postal);
+            if ($objeto == false){
+                array_push($errors, "No se pudo verificar tu código postal. Por favor verifica que es correcto.");
+            } else {
+                list($id_estado, $id_municipio) = explode(",", $objeto);
+            }
+        }
+
         $actualiza = $usuario->datosUsuario
             ->update([
                 
                 'id_estado' => $id_estado,
                 'id_municipio' => $id_municipio,
+                'email' => $email,
+                'codigo_postal' => $codigo_postal,
                 'id_nivel_estudios' => $id_nivel_estudios,
                 'id_pueblo_indigena' => $id_pueblo_indigena,
                 'id_capacidad_diferente' => $id_capacidad_diferente,
@@ -488,13 +529,14 @@ class JovenesController extends Controller
         $pueblos_indigena = PuebloIndigena::all();  
         $capacidades_diferente = CapacidadDiferente::all(); 
         $programas_gobierno = ProgramaGobierno::all();   
-        $idiomas_adicionales = IdiomaAdicional::all();
+        $idiomas = IdiomaAdicional::all();
+        $generos = Genero::all();
         $usuario = User::find($id_usuario);
         $datosUsuario = DatosUsuario::where('id_usuario', $id_usuario)->first();
         $codigo_guanajoven = CodigoGuanajoven::where('id_usuario', $id_usuario)->first();
       return view("jovenes.perfil", ['usuario' => $usuario, 'datosUsuario' => $datosUsuario, 'codigoGuanajoven' => $codigo_guanajoven, 'estados' => $estados, 
                 'municipios' => $municipios, 'niveles_estudio' => $niveles_estudio, 'pueblos_indigena' => $pueblos_indigena, 'capacidades_diferente' => $capacidades_diferente,
-                'programas_gobierno' => $programas_gobierno, 'idiomas_adicionales' => $idiomas_adicionales]);
+                'programas_gobierno' => $programas_gobierno, 'idiomas' => $idiomas, 'generos'=> $generos]);
 
     }
 

@@ -75,6 +75,7 @@
                     @endif
 
                     <li><a href="{{url('jovenes')}}"> Jóvenes </a></li>
+                    <li><a href="{{url('servicios')}}"> Servicios </a></li>
                     <li><a href="{{url('eventos/inicio')}}">Eventos</a></li>
 
                     @if(session('funcionario')->rol()->nombre == 'rol_administrador_sistema' || session('funcionario')->rol()->nombre == 'rol_director')
@@ -102,6 +103,7 @@
                       @endif
 
                       <li><a href="{{url('jovenes')}}"> Jóvenes </a></li>
+                      <li><a href="{{url('servicios')}}"> Servicios </a></li>
                       <li><a href="{{url('eventos/inicio')}}">Eventos</a></li>
 
                       @if(session('funcionario')->rol()->nombre == 'rol_administrador_sistema' || session('funcionario')->rol()->nombre == 'rol_director')
