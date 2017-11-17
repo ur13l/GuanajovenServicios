@@ -28,7 +28,21 @@ class ChatController  extends Controller{
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request) {
-        $chats = Chat::paginate(30);
-        return view('chat.index', ['chats' => $chats] );
+
+        $chats = Chat::all();
+        $arr = array();
+        
+        foreach ($chats as $key => $chat) {
+            if( $chat->ultimoMensaje() )
+                $order = $chat->ultimoMensaje()->id_mensaje;
+            else
+                $order = 0;
+
+            array_push($arr, array('order' => $order, 'chat' => $chat ) );
+        }
+
+        rsort($arr);
+
+        return view('chat.index', ['chats' => $arr] );
     }
 }

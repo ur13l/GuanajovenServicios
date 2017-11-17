@@ -6,7 +6,7 @@
 
 
 jQuery.validator.addMethod('fecha_menor', (value, element, params) => {
-    var fechaInicio = moment($(params[0]).val(),"DD MMM, YYYY" ),
+    var fechaInicio = moment($(params[0]).val(), "DD MMM, YYYY"),
         fechaFin = moment(value, "DD MMM, YYYY");
 
     return fechaFin.isAfter(fechaInicio);
@@ -17,12 +17,12 @@ $(function() {
 
     var counter = 0;
     //Se asigna un formato a las fechas a la hora que carga la interfaz
-    $("#fecha_inicio").val(moment($("#fecha_inicio").val(),"YYYY-MM-DD" ).format("DD/MM/YYYY"));
-    $("#fecha_cierre").val(moment($("#fecha_cierre").val(), "YYYY-MM-DD").format("DD/MM/YYYY"));
+    $("#fecha_inicio").val(moment($("#fecha_inicio").val(), "YYYY-MM-DD").format("DD MMMM, YYYY"));
+    $("#fecha_cierre").val(moment($("#fecha_cierre").val(), "YYYY-MM-DD").format("DD MMMM, YYYY"));
 
-    $(".datepicker").change(function () {
+    $(".datepicker").change(function() {
 
-        $(this).val(moment($(this).val(), "DD MMM, YYYY").format("DD/MM/YYYY"))
+        $(this).val(moment($(this).val(), "DD MMMM, YYYY").format("DD MMMM, YYYY"))
     })
 
     //Funcionalidad de botón eliminar
@@ -35,13 +35,16 @@ $(function() {
          * Se asigna el evento al botón de yes para
          */
         $("#yesBtn").unbind()
-            .click({elem: elem, id: id}, function(event) {
+            .click({
+                elem: elem,
+                id: id
+            }, function(event) {
                 var arrIds = JSON.parse($("#input-deleted-docs").val());
                 arrIds.push(id);
                 $("#input-deleted-docs").val(JSON.stringify(arrIds));
                 event.data.elem.remove();
                 $("#deleteModalDoc").closeModal();
-        });
+            });
     });
 
     //Funcionalidad de botón eliminar en nuevos
@@ -53,7 +56,9 @@ $(function() {
          * Se asigna el evento al botón de yes para
          */
         $("#yesBtn").unbind()
-            .click({elem: elem}, function(event) {
+            .click({
+                elem: elem
+            }, function(event) {
                 event.data.elem.remove();
                 $("#deleteModalDoc").closeModal();
             });
@@ -104,10 +109,10 @@ $(function() {
         $("#doc-container").append(section);
 
         //Método utilizado para validar los inputs file.
-        $(".input-file-nuevo").each(function(){
-            $(this).rules("add",{
-                required:true,
-                messages:{
+        $(".input-file-nuevo").each(function() {
+            $(this).rules("add", {
+                required: true,
+                messages: {
                     required: "Cargar el archivo es obligatorio. "
                 }
 
@@ -115,10 +120,10 @@ $(function() {
         });
 
         //Método utilizado para validar los inputs file.
-        $(".doc-titulo-nuevo").each(function(){
-            $(this).rules("add",{
-                required:true,
-                messages:{
+        $(".doc-titulo-nuevo").each(function() {
+            $(this).rules("add", {
+                required: true,
+                messages: {
                     required: "Escriba el título del documento. "
                 }
 
@@ -129,8 +134,8 @@ $(function() {
     //Validación de formulario para nueva convocatoria
     $("#form-editar").validate({
         submitHandler: function(form) {
-            $("#fecha_inicio").val(moment($("#fecha_inicio").val(), "DD/MM/YYYY").format("YYYY-MM-DD"));
-            $("#fecha_cierre").val(moment($("#fecha_cierre").val(), "DD/MM/YYYY").format("YYYY-MM-DD"));
+            $("#fecha_inicio").val(moment($("#fecha_inicio").val(), "DD MMMM, YYYY").format("YYYY-MM-DD"));
+            $("#fecha_cierre").val(moment($("#fecha_cierre").val(), "DD MMMM, YYYY").format("YYYY-MM-DD"));
             form.submit();
         },
         rules: {
@@ -148,22 +153,22 @@ $(function() {
                 required: true
             },
             "doc-file-nuevo": {
-                required:true
+                required: true
             }
         },
         messages: {
             titulo: "Este campo es obligatorio",
             fecha_inicio: "Este campo es obligatorio",
             fecha_cierre: {
-                required:"Este campo es obligatorio",
+                required: "Este campo es obligatorio",
                 fecha_menor: "La fecha de cierre debe ser después de la de apertura"
             },
             descripcion: "Este campo es obligatorio",
         },
-        errorElement : 'span',
+        errorElement: 'span',
         errorPlacement: function(error, element) {
             var placement = $(element).data('error');
-            if($(element).attr('type') == "file"){
+            if ($(element).attr('type') == "file") {
                 element = $(element).parent().parent().parent().find('[type=text]');
             }
             $(element).addClass('invalid');
@@ -177,12 +182,12 @@ $(function() {
     });
 
     //Método para cambiar la imagen
-    $("#imagen").on('change',function(){
+    $("#imagen").on('change', function() {
         if (this.files && this.files[0]) {
             var reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = function(e) {
                 $("#img-convocatoria")
-                    .error(() => $("#img-convocatoria").attr( "src", "../../img/ic_unknow.png" ))
+                    .error(() => $("#img-convocatoria").attr("src", "../../img/ic_unknow.png"))
                     .attr('src', e.target.result)
             }
             reader.readAsDataURL(this.files[0]);

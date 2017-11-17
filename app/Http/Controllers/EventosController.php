@@ -10,6 +10,7 @@ use App\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Mail;
 
 class EventosController extends Controller {
 
@@ -18,7 +19,7 @@ class EventosController extends Controller {
      * UsuariosController constructor.
      */
     public function __construct() {
-        $this->middleware('auth.web');
+        //$this->middleware('auth.web');
     }
 
     public $meses = [
@@ -232,5 +233,41 @@ class EventosController extends Controller {
             'evento' => $evento,
             'usuariosAsistentes' => $usuariosAsistentes,
         ]);
+    }
+
+     //En caso de ser un email de Eventos
+     public function registrado(Request $request) {
+        $id_usuario = $request->id_usuario;
+        $idEvento = $request->id_evento;
+        $curp_usuario = $request->curp_usuario;
+        $nombreEvento = $request->nombre_evento;
+        $evento = Evento::find($idEvento);
+        $usuario = User::find($id_usuario);
+        if ($evento->usuarios->contains($usuario)) {
+            return view('layout.usuario_listo', ['titulo' => $nombreEvento]);
+        } else {
+             return $this->enviarCorreoEvento($id_usuario, $idEvento, $curp_usuario, $nombreEvento);
+        }
+    }
+
+
+    public function enviarCorreoEvento($idUsuario, $idEvento, $curp, $nombreEvento) {
+        $usuario = User::find($idUsuario);
+        $evento = Evento::find($idEvento);
+        $evento->usuarios()->attach($usuario->id, ['le_interesa' => 1]);
+
+        Mail::send('correos.notificacion_enviada', [
+            'curp_usuario' => $curp,
+            'tipo' => 'el evento',
+            'titulo' => $nombreEvento
+        ], function ($message) use ($curp, $nombreEvento, $usuario) {
+            //Desde donde llega el mensaje
+            $message->from('guanajoven@gmail.com', 'Guanajoven');
+            //Mensaje para el usuario
+            $message->to( $usuario->email, 'Administrador')
+                    ->subject('Nuevo registro al evento: '.$nombreEvento);
+        });
+
+        return view('layout.usuario_registrado', ['titulo' => $nombreEvento]);
     }
 }

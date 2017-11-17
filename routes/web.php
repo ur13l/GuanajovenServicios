@@ -22,9 +22,13 @@ Route::get('/usuarios/logout', 'Auth\LoginController@getlogout');
 
 Route::get('/usuarios/nuevo', 'UsuariosController@nuevo');
 
+Route::post('/usuarios/registrar', 'UsuariosController@registrar');
+
 Route::post('/usuarios/curp', 'UserApiController@obtenerCurp');
 
 Route::post('/usuarios/obtenerPermisos', 'UsuariosController@obtenerPermisos');
+
+Route::post('/usuarios/obtenerValoresPuesto', 'UsuariosController@obtenerValoresPuesto');
 
 
 //Publicidad
@@ -38,7 +42,7 @@ Route::group(['prefix' => 'publicidad'], function () {
 
 
 //Convocatorias
-Route::group(['prefix' => 'convocatorias'], function() {
+Route::group(['prefix' => 'convocatorias', 'middleware' => ['auth.web']], function() {
     Route::get('/', 'ConvocatoriasController@index')->name('convocatorias');
     Route::get('/nueva', 'ConvocatoriasController@nueva');
     Route::post('/eliminar', 'ConvocatoriasController@eliminar');
@@ -46,6 +50,11 @@ Route::group(['prefix' => 'convocatorias'], function() {
     Route::get('/editar/{id_convocatoria}', 'ConvocatoriasController@vistaEditar');
     Route::post('/editar', 'ConvocatoriasController@editar');
 });
+
+Route::group(['prefix' => 'convocatorias'], function() {
+    Route::any('/registrada', 'ConvocatoriasController@registrada')->name('convocatoria.registrada');
+});
+
 
 //Empresas
 Route::group(['prefix' => 'empresas'], function() {
@@ -84,6 +93,7 @@ Route::group(['prefix' => 'jovenes'], function(){
 Route::group(['prefix' => 'servicios'], function(){
     Route::get('/', 'ServiciosController@index');
     Route::get('/nuevo', 'ServiciosController@nuevo');
+    Route::get('/editar', 'ServiciosController@editar');
 });
 
 //Notificaciones
@@ -101,17 +111,23 @@ Route::get('/historial', 'HistorialController@index');
 Route::get('/reportes', 'ReportesController@index');
 //Usuarios
 Route::get('/usuarios', 'UsuariosController@index');
+Route::post('/usuarios/passwordactualizada', function() {
+        return view('usuarios.password_actualizado');
+});
 
 //Eventos
-Route::group(['prefix' => 'eventos'], function () {
+Route::group(['prefix' => 'eventos', 'middleware' => ['auth.web']], function () {
     Route::get('/inicio', 'EventosController@index')->name('eventos');
     Route::get('/nuevo', 'EventosController@nuevo');
     Route::post('/editar/{idEvento}', 'EventosController@editar');
     Route::post('/eliminar', 'EventosController@eliminar');
     Route::post('/guardar', 'EventosController@guardar');
-    Route::post('/estadisticas/{idEvento}', 'EventosController@estadistica');
+    Route::post('/estadisticas/{idEvento}', 'EventosController@estadistica'); 
 });
 
+Route::group(['prefix' => 'eventos'], function() {
+    Route::any('/registrado', 'EventosController@registrado')->name('evento.registrado');
+});
 //Video
 Route::get('/video', 'VideoController@index');
 

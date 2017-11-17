@@ -36,4 +36,8 @@ class Chat extends Model
     public function contarNoLeidos() {
         return count($this->mensajes()->where('visto', false)->get());
     }
+
+    public function todosLeidos(){
+        return $this->mensajes()->where('visto',false)->update(['visto' => true]);
+    }
 }

@@ -36,11 +36,11 @@
                     <label  class="isTrue" for="editbases">Bases</label>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input id="editfecha_inicio" name="editfecha_inicio"  type="date" class="datepicker">
+                    <input id="editfecha_inicio" name="editfecha_inicio"   class="datepicker">
                     <label class="isTrue" for="editfecha_inicio">Fecha de Apertura</label>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input id="editfecha_fin" name="editfecha_fin"  type="date" class="datepicker">
+                    <input id="editfecha_fin" name="editfecha_fin"  class="datepicker">
                     <label class="isTrue" for="editfecha_fin">Fecha de Cierre</label>
                 </div>
                 <div class="input-field col s12">
@@ -78,11 +78,11 @@
                     <label for="bases">Bases</label>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input id="fecha_inicio" name="fecha_inicio"  type="date" class="datepicker">
+                    <input id="fecha_inicio" name="fecha_inicio"  class="datepicker">
                     <label for="fecha_inicio">Fecha de Apertura</label>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input id="fecha_fin" name="fecha_fin"  type="date" class="datepicker">
+                    <input id="fecha_fin" name="fecha_fin"  class="datepicker">
                     <label for="fecha_fin">Fecha de Cierre</label>
                 </div>
                 <div class="input-field col s12">
@@ -234,8 +234,8 @@
                     {{$promocion->titulo}}
                   </td>
                   <td>{{$promocion->descripcion}}</td>
-                  <td>{{$promocion->fecha_inicio}}</td>
-                  <td>{{$promocion->fecha_fin}}</td>
+                  <td class="fecha_inicio">{{$promocion->fecha_inicio}}</td>
+                  <td class="fecha_fin">{{$promocion->fecha_fin}}</td>
                   <!--href="{{url('/empresas/editarPromocion/'.$promocion->id_promocion)}}"-->
                   <td> <a class="btn-floating halfway-fab waves-effect waves-light accent-color editar-button"  id="editar-button"><i class="material-icons">mode_edit</i></a></td>
                     <td><a href="{{url('/promociones/eliminarPromocion/'.$promocion->id_promocion.'/'.$empresa->id_empresa)}}" class="btn-floating halfway-fab waves-effect waves-light red" id="delete-button"><i class="material-icons">clear</i></a></td>

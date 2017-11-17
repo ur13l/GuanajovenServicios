@@ -16,10 +16,14 @@ class ServiciosController extends Controller{
             return view('servicios.index', ['usuarios' => $usuarios, 'tipo' => 'def', 'columna' => '']);
          }
 
-         public function nuevo(){
-           
-            return view('servicios.nuevo');
-         }
+        public function nuevo(){
+           return view('servicios.nuevo');
+        }
+
+        public function editar(){
+            return view('servicios.editar');
+        }
+
      
  
 }

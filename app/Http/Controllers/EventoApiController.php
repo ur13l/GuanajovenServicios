@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CodigoGuanajoven;
 use App\DatosUsuario;
 use App\Evento;
+use Auth;
 use App\NotificacionEvento;
 use App\Notifications\EventoNotificacion;
 use App\User;
@@ -16,6 +17,10 @@ use PhpParser\Node\Expr\Array_;
 class EventoApiController extends Controller
 {
 
+    /**
+     * Eventos: Obtener
+     * Devuelve la lista de eventos activos.
+     */
     public function obtenerEventos(Request $request)
     {
         $timestamp = $request->input('timestamp');
@@ -32,6 +37,11 @@ class EventoApiController extends Controller
         ));
     }
 
+    /**
+     * Evento: Marcar
+     * params: [id_evento, api_token, latitud, longitud]
+     * Método para indicar que a un usuario está en el área de un evento.
+     */
     public function marcarEvento(Request $request)
     {
         $idEvento = $request->input('id_evento');
@@ -58,9 +68,6 @@ class EventoApiController extends Controller
                 cos($latitudUsuario) * cos($distanciaLongitud)) * $radioTierra;
 
         $distanciaMetros = $distanciaTotal * 1000;
-
-        //dd($distanciaMetros);
-
 
         if ($distanciaMetros <= 500) {
             if (NotificacionEvento::where('id_evento', '=', $idEvento)->where('id_usuario', '=', $usuario->id)->where('asistio', '=', 1)->count() == 0) {
@@ -120,40 +127,31 @@ class EventoApiController extends Controller
         $idEvento = $request->input('id_evento');
         $fechaActual = Carbon::now('America/Mexico_City')->toDateTimeString();
         $codigoGuanajoven = CodigoGuanajoven::where('token', $token)
-            //->where('fecha_limite', '>', $fechaActual)
-            //->where('fecha_expiracion', '>', $fechaActual)
             ->first();
+        $evento = Evento::find($idEvento);
+        $usuario = User::find($codigoGuanajoven->id_usuario);
 
-        $notificacion_existe = NotificacionEvento::where('id_evento', '=', $idEvento)->where('id_usuario', '=', $codigoGuanajoven->id_usuario)->first();
+        $notificacion = $evento->usuarios()->find($usuario->id);
 
-        if (!isset($notificacion_existe)) {
+        if (!isset($notificacion) || $notificacion->asistio !== 1) {
             if (isset($codigoGuanajoven)) {
                 $usuario = User::find($codigoGuanajoven->id_usuario);
 
                 if (isset($usuario)) {
-                    $notificacion = NotificacionEvento::where('id_evento', $idEvento)
-                        ->where('id_usuario', $usuario->id)
-                        ->first();
-
-                    if (isset($notificacion)) {
-                        $notificacion->dispositivo = 2;
-                        $notificacion->save();
-                    } else {
-                        NotificacionEvento::create([
-                            'id_evento' => $idEvento,
-                            'id_usuario' => $usuario->id,
-                            'dispositivo' => 2,
-                            'asistio' => 1
-                        ]);
+                    if(!isset($notificacion)) {
+                        $evento->usuarios()->attach($usuario->id, ['dispositivo' => 2, 'asistio' => 1]);  
+                            
+                    } 
+                    else {
+                        $notificacion->pivot->dispositivo = 2;
+                        $notificacion->pivot->asistio = 1;
+                        $notificacion->pivot->save();
                     }
-
-                    return response()->json(array(
-                        'status' => 200,
-                        'success' => true,
-                        'errors' => [],
-                        'data' => $usuario->email
-                    ));
-                } else {
+                        $puntaje = $usuario->puntaje;
+                        $sumaPuntajes = $puntaje + $evento->puntos_otorgados;
+                        $usuario->update(['puntaje' => $sumaPuntajes]);
+                }
+                else {
                     return response()->json(array(
                         'status' => 404,
                         'success' => false,
@@ -161,6 +159,14 @@ class EventoApiController extends Controller
                         'data' => ''
                     ));
                 }
+
+                return response()->json(array(
+                    'status' => 200,
+                    'success' => true,
+                    'errors' => [],
+                    'data' => $usuario->email
+                ));
+                 
             } else {
                 return response()->json(array(
                     'status' => 404,
@@ -284,8 +290,44 @@ class EventoApiController extends Controller
         }
     }
 
+
+    /**
+     * Evento: Enviar notificacion
+     * params: [api_token, id_evento]
+     * Se llama cuando un usuario se interesa en un evento nuevo
+     * @param Request $request
+     * @return Response
+     */
+    public function enviarNotificacion(Request $request) {
+        $apiToken = $request->api_token;
+        $idEvento = $request->id_evento;
+        $evento = Evento::find($idEvento);
+        $usuario = Auth::guard('api')->user();
+        
+        if ($evento->usuarios()->find($usuario->id)) {
+            return response()->json(array(
+                "success" => false,
+                "status" => 500,
+                "errors" => ["El usuario ya se registró en este evento."]
+            ));
+        } else {
+            $datosUsuario = DatosUsuario::where('id_usuario', $usuario->id)->first();
+            $usuario->notify(new EventoNotificacion($evento, $datosUsuario));
+            return response()->json(array(
+                "success" => true,
+                "status" => 200,
+                "errors" => [],
+                "data" => $evento
+            ));
+        }
+        
+    }
+
+
     private function subir() {
 
-}
+    }
+
+
 
 }

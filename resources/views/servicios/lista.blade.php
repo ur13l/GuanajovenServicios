@@ -21,8 +21,8 @@
                                 
                                 <td style="width: 100px;">{{isset($user->datosUsuario) ? $user->datosUsuario->curp : ""}}</td>
                                 <td style="width: 100px;">{{$user->email}}</td>
-                                <td class="center-align"><a href="{{url('jovenes/perfil/'.$user->id)}}"><i class="material-icons grey-text editar" style="cursor: pointer" data-user-id="{{$user->id}}">mode_edit</i></a></td>
-                                <td class="center-align"><i class="material-icons grey-text borrar" style="cursor: pointer" data-user-id="{{$user->id}}">delete</i></td>
+                                <td class="center-align"><a href="{{url('servicios/editar/')}}"><i class="material-icons grey-text editar-servicio" style="cursor: pointer">mode_edit</i></a></td>
+                                <td class="center-align"><i class="material-icons grey-text borrar-servicio" style="cursor: pointer" data-user-id="{{$user->id}}">delete</i></td>
                             </tr>
                         @endforeach
                 </tbody>

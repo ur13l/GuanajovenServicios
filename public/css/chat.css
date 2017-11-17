@@ -50,3 +50,47 @@
     margin-bottom: 10px;
     color: white;
 }
+
+
+
+.buscarUsuarioDiv{
+    margin-top: 16px;
+    background-color: rgba(7, 70, 119, 0.05);
+}
+
+#lista-chats{
+    overflow: scroll;
+    height: 17cm;
+    padding-bottom: 10cm;
+}
+
+#contenedor_izq{
+    position: fixed;
+}
+
+#buscarUsuarios{
+    margin-bottom: 0px;
+    background-color: rgba(7, 70, 119, 0.05);
+    width: 85%;
+    padding-left: 5%;
+}
+
+.fecha_mensaje{
+    height: 3px;
+    text-align: right;
+    font-size: 9px;
+}
+
+#mensaje{
+    width: 80%;
+    float: left;
+}
+
+#enviarMensaje {
+    width: 2.8cm;
+    float: left;
+    margin-right: auto;
+    margin-left: 3.5%;
+    height: 40px;
+    padding-top: 7px;
+}

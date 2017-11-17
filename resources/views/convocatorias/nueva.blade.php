@@ -35,11 +35,11 @@
                     <label for="descripcion">Descripción</label>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input id="fecha_inicio" name="fecha_inicio" type="date" class="datepicker">
+                    <input id="fecha_inicio" name="fecha_inicio"  class="datepicker">
                     <label for="fecha_inicio">Fecha de Apertura</label>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input id="fecha_cierre" name="fecha_cierre" type="date" class="datepicker">
+                    <input id="fecha_cierre" name="fecha_cierre"  class="datepicker">
                     <label for="fecha_cierre">Fecha de Cierre</label>
                 </div>
                 <div class="file-field input-field col s12 l6">

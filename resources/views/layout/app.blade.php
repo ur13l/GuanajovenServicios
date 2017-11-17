@@ -24,6 +24,7 @@
         <script type="text/javascript" src="{{url('/js/jquery.twbsPagination.min.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/nouislider.min.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/jquery.twbsPagination.min.js')}}"></script>
+        <script type="text/javascript" src="{{url('js/jquery.materialize-autocomplete.js')}}"></script>
         <!--<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>-->
         <script type="text/javascript">
             $(document).ready(function(){
@@ -68,6 +69,7 @@
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                 <!--  <li><a href="{{url('reportes')}}">Reportes</a></li>-->
+                @if(session('funcionario') !== null)
                     <li><a href="{{url('inicio')}}">Inicio</a></li>
 
                     @if(session('funcionario')->rol()->nombre == 'rol_administrador_sistema')
@@ -120,6 +122,7 @@
                       <li><a href="{{url('chat')}}">Chat</a></li>
                   <!--<li><a href="{{url('video')}}">Video</a></li>-->
                       <li><a href="{{url('usuarios/logout')}}">Cerrar sesión</a></li>
+                      @endif
                 </ul>
             </div>
         </nav>

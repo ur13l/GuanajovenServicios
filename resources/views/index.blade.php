@@ -40,9 +40,11 @@
                             <label for="password" class="validate">Contraseña</label>
                             <input type="password" name="password" id="password"/><br>
                         </div>
-                        <div class="input-field col right s5">
+                        <div class="input-field col right">
                             <div class="row">
-                                <input class="waves-effect waves-light rose-code btn" style="background: #BF3364;" type="submit" name="Iniciar Sesión" value="Iniciar Sesión"/>
+                                <i class="waves-effect waves-light btn waves-input-wrapper" style="background: #BF3364;padding: 0px;">
+                                    <input class="waves-button-input" style="height: 1cm;width: 5cm;" type="submit" name="Iniciar Sesión" value="Iniciar Sesión">
+                                </i>
                             </div>
                         </div>
                     </form>
@@ -52,5 +54,8 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    
+</script>
 </body>
 </html>

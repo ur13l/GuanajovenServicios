@@ -6,7 +6,7 @@
 
 @section('head')
     <script type="text/javascript" src="{{url('/js/jquery.validate.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/servicio/nuevo.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/servicio/editar.js')}}"></script>
 
 @endsection
 
@@ -16,7 +16,7 @@
 
 @section('contenedor')
 <div class="row">
-    <h4>Nuevo Servicio</h4>
+    <h4>Editar Servicio</h4>
 </div>
 <div class="row">
     @foreach($errors->all() as $error)
@@ -89,7 +89,7 @@
         </div>
         <div class="row">
             <div class="input-field col s12 m6">
-                <input id="titulo" name="tíiulo" type="text" class="validate">
+                <input id="titulo" name="titulo" type="text" class="validate">
                 <label for="titulo">Título de orden de servicio</label>
             </div>
         </div>
@@ -110,10 +110,34 @@
             </div>
         </div>
         <div class="row">
+            <div class="col s12 m3">
+                <label for="fecha_resolucion">Fecha de resolución</label>
+                <input name="fecha_resolucion" id="fecha_resolucion" type="text" class="datepicker">
+            </div>
+        </div>
+        <div class="row">
             <div class="input-field col s12 m3">
                 <input id="costo_estimado" name="costo_estimado" type="text" class="validate">
                 <label for="costo_estimado">Costo estimado</label>
             </div>
+            <div class="input-field col s12 m3">
+                <input id="costo_real" name="costo_real" type="text" class="validate">
+                <label for="costo_real">Costo real</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m3">
+                <input id="resultado" name="resultado" type="text" class="validate">
+                <label for="resultado">Resultado</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <textarea id="observaciones" name="observaciones" class="materialize-textarea"></textarea>
+                <label for="observaciones">Observaciones</label>
+            </div>
+        </div>
+        <div class="row">
             <div class="input-field col s12 m3">
                 <input id="estatus" name="estatus" type="text" class="validate">
                 <label for="estatus">Estatus</label>

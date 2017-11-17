@@ -46,10 +46,13 @@ class EventoNotificacion extends Notification {
         $idEvento = $this->evento->id_evento;
         $curpUsuario = $this->datosUsuario->curp;
 
+        $fecha_inicio = $this->evento->fecha_inicio->format("d/m/Y");
+        $fecha_fin = $this->evento->fecha_fin->format("d/m/Y");
+
         return (new MailMessage)
             ->line($this->datosUsuario->nombre.'.')
             ->line('Hemos visto que estas interesado en la evento: '.$this->evento->titulo.'.')
-            ->line('Con fechas de: '.$this->evento->fecha_inicio.' a '.$this->evento->fecha_fin.'.')
+            ->line('Con fechas de: '.$fecha_inicio.' al '.$fecha_fin.'.')
             ->line('Si estas de acuerdo con ello, favor de oprimir el boton de aceptar, caso contrario has caso omiso a este mensaje.')
             //ingresamos a la url correspondiente con los parametros
             ->action('Aceptar', route('evento.registrado', array(

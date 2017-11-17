@@ -11,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!--<![endif]-->
 
-    <title>Registro exitoso - Guanajoven</title>
+    <title>Confirmed, you’re on the Twist beta waitlist!</title>
 
 
     <!-- Normalize Styles -->
@@ -221,7 +221,7 @@
                                         <tbody><tr>
                                             <td class="" style="padding: 20px 0; text-align: center; ;">
 
-                                                <img alt="error" class=" " src="https://d30y9cdsu7xlg0.cloudfront.net/png/122433-200.png" style="border: 0; height: auto; max-width: 100%; vertical-align: middle; ;" width="200">
+                                                <img alt="error" class=" " src="http://guanajovenapp.guanajuato.gob.mx/img/logo_guanajoven.png" style="border: 0; height: auto; max-width: 100%; vertical-align: middle; ;" width="200">
 
                                             </td>
                                         </tr>
@@ -238,9 +238,26 @@
 
                                                 <p style="margin: 20px 0;; font-size: 14px; mso-line-height-rule: exactly; line-height: 24px; margin: 30px 0;; ;">
 
-                                                    <span style="font-weight: bold;;">Registro exitoso!</span>
+                                                    <span style="font-weight: bold;;">Nuevo registro para {{ $tipo }}: {{ $titulo }}</span>
 
                                                 </p>
+
+                                                <p style="margin: 20px 0;; font-size: 14px; mso-line-height-rule: exactly; line-height: 24px; margin: 30px 0;; ;">
+
+
+
+                                                    Con el usuario: {{ $curp_usuario }}
+
+
+
+                                                </p>
+
+
+
+                                                <p style="margin: 20px 0;; font-size: 14px; mso-line-height-rule: exactly; line-height: 24px; margin: 30px 0;; ;">
+                                                    Para mas información:  guanajoven@gmail.com
+                                                </p>
+
 
                                                 </center>
 

@@ -21,7 +21,7 @@
         @foreach($errors->all() as $error)
             <div class="red-text">{{$error}}</div>
         @endforeach
-        <form id="form-crear" method="post" action="{{url('/empresas/crear')}}" class="col s12"
+        <form id="form-crear" method="post" action="{{url('/usuarios/registrar')}}" class="col s12"
               enctype="multipart/form-data">
             {{csrf_field()}}
 
@@ -34,28 +34,33 @@
                 </div>
 
                 <div class="input-field col s12 ">
-                    <input readonly id="nombre" name="nombre" type="text" class="validate">
+                    <input readonly id="nombre" name="nombre" type="text" >
                     <label for="nombre">Nombre</label>
                 </div>
 
                 <div class="input-field col s12 ">
-                    <input readonly id="apellido_paterno" name="apellido_paterno" type="text" class="validate">
+                    <input readonly id="apellido_paterno" name="apellido_paterno" type="text">
                     <label for="apellido_paterno">Apellido Paterno</label>
                 </div>
 
                 <div class="input-field col s12 ">
-                    <input readonly id="apellido_materno" name="apellido_materno" type="text" class="validate">
+                    <input readonly id="apellido_materno" name="apellido_materno" type="text">
                     <label for="apellido_materno">Apellido Materno</label>
                 </div>
 
                 <div class="input-field col s12 ">
-                    <input readonly id="fecha_nacimiento" name="fecha_nacimiento" type="text" class="validate">
-                    <label for="fecha_nacimiento">Fecha nacimiento</label>
+                    <input id="email" name="email" type="email" class="validate">
+                    <label for="email">Correo electrónico</label>
                 </div>
 
-                <div class="input-field col s12 ">
-                    <input id="correo" name="correo" type="email" class="validate">
-                    <label for="correo">Correo electrónico</label>
+                <div class="input-field col s12">
+                    <input id="password" name="password" type="password" class="validate">
+                    <label for="password">Contraseña</label>
+                </div>
+
+                <div class="input-field col s12">
+                    <input id="confirmar_password" name="confirmar_password" type="password" class="validate">
+                    <label for="confirmar_password">Confirmar contraseña</label>
                 </div>
 
                 <div class="input-field col s12 ">
@@ -76,7 +81,7 @@
                 <div class="col s12">
                     <ul class="list-group">
                         @foreach($permisos as $permiso)
-                            <li id="{{ $permiso->id }}" class="list-group-item">{{ $permiso->nombre_vista }}</li>
+                            <li id="{{ $permiso->id }}" class="list-group-item-rol">{{ $permiso->nombre_vista }}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -94,7 +99,7 @@
                 <div class="col s4">
                     <ul class="list-group">
                         @foreach($areas as $area)
-                            <li class="list-group-item">{{ $area->nombre }}</li>
+                            <li id="area_{{ $area->id }}"class="list-group-item-puesto">{{ $area->nombre }}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -102,7 +107,7 @@
                 <div class="col s4">
                     <ul class="list-group">
                         @foreach($direcciones as $direccion)
-                            <li class="list-group-item">{{ $direccion->nombre }}</li>
+                            <li id="direccion_{{ $direccion->id }}" class="list-group-item-puesto">{{ $direccion->nombre }}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -110,72 +115,16 @@
                 <div class="col s4">
                     <ul class="list-group">
                         @foreach($dependencias as $dependencia)
-                            <li class="list-group-item">{{ $dependencia->nombre }}</li>
+                            <li id="dependencia_{{ $dependencia->id }}" class="list-group-item-puesto">{{ $dependencia->nombre }}</li>
                         @endforeach
                     </ul>
                 </div>
 
+                <div class="col s4">
                 <input class="input-field btn right" style="background: #BF3364;" type="submit" value="Registrar">
+</div>
             </div>
         </form>
     </div>
-
-    <script>
-        $(function () {
-            $('#curp').keyup(function () {
-                if ($('#curp').val().length === 18) {
-                    var curp = $('#curp').val().toLocaleUpperCase();
-                    $.ajax({
-                        type: "POST",
-                        url: 'curp',
-                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        data: {
-                            curp: curp
-                        },
-                        success: function (data) {
-                            $('#nombre').val(data.data.nombres).trigger('change');
-                            $('#apellido_paterno').val(data.data.PrimerApellido).trigger('change');
-                            $('#apellido_materno').val(data.data.SegundoApellido).trigger('change');
-                            $('#fecha_nacimiento').val(data.data.fechNac).trigger('change')
-                        },
-                        error: function (data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                } else if ($('#curp').val().length < 18) {
-                    $('#nombre').val('')
-                    $('#apellido_paterno').val('');
-                    $('#apellido_materno').val('');
-                    $('#fecha_nacimiento').val('');
-                }
-            });
-
-            $('#rol').change(function () {
-                var id_rol = $('#rol').val();
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'obtenerPermisos',
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    data: {
-                        id_rol : id_rol
-                    },
-                    success: function(data) {
-                        
-                        console.log(data.permisos_rol);
-
-                        $.each(data.permisos_rol, function(index, value) {
-                            $('#' + value.id).attr('class', 'list-group-item list-group-item-info');
-                        });
-
-                    },
-                    error: function(data) {
-                        console.log(data);
-                    }
-                });
-
-            })
-        })
-    </script>
 
 @endsection

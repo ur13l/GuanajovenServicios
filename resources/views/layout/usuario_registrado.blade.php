@@ -221,7 +221,7 @@
                                         <tbody><tr>
                                             <td class="" style="padding: 20px 0; text-align: center; ;">
 
-                                                <img alt="error" class=" " src="https://cdn0.iconfinder.com/data/icons/smile-emoticons/78/smyle_emoticons-02-512.png" style="border: 0; height: auto; max-width: 100%; vertical-align: middle; ;" width="200">
+                                                <img alt="error" class=" " src="{{url('/img/logo_guanajoven.png')}}" style="border: 0; height: auto; max-width: 100%; vertical-align: middle; ;" width="200">
 
                                             </td>
                                         </tr>
@@ -238,7 +238,7 @@
 
                                                     <p style="margin: 20px 0;; font-size: 14px; mso-line-height-rule: exactly; line-height: 24px; margin: 30px 0;; ;">
 
-                                                        <span style="font-weight: bold;;">No te preocupes, ya habias sido registrado a {{ $titulo }} antes!</span>
+                                                        <span style="font-weight: bold;;">Has sido registrado a {{ $titulo }}. En breve te enviaremos un correo confirmando tu registro.  </span>
 
                                                     </p>
 

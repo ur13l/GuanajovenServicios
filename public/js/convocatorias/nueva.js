@@ -1,5 +1,17 @@
 $(function() {
 
+  //Evita que los campos Date se empalmen
+    $('.datepicker').change(function(){
+        var input = $(this);
+        var label = $('[for='+input.attr('id')+']');
+
+        if( input.val().length > 0 ){
+          label.addClass('active');
+        }else {
+          label.removeClass('active');
+        }
+    });
+
     //Validación de formulario para nueva convocatoria
     $("#form-crear").validate({
         submitHandler: function(form) {
@@ -35,7 +47,7 @@ $(function() {
             imagen: "Este campo es obligatorio",
             documentos: "Este campo es obligatorio",
         },
-        errorElement : 'div',
+        errorElement : 'div',+
         errorPlacement: function(error, element) {
             var placement = $(element).data('error');
             $(element).addClass('invalid');

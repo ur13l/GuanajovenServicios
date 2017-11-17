@@ -19,10 +19,10 @@ class ConvocatoriaNotificacionController extends Controller
             return response()->json(array(
                 "success" => false,
                 "status" => 500,
-                "errors" => []
+                "errors" => ["Ya estás registrado esta convocatoria"]
             ));
         } else {
-            $usuario = User::where('id', '=', $request->input('id_usuario'))->firstOrFail();
+            $usuario = User::where('id', '=', $request->id_usuario)->firstOrFail();
             $convocatoria = Convocatoria::where('id_convocatoria', '=', $request->input('id_convocatoria'))->firstOrFail();
             $datos_usuario = DatosUsuario::where('id_usuario', '=', $request->input('id_usuario'))->firstOrFail();
             $usuario->notify(new ConvocatoriaNotification($convocatoria, $datos_usuario));

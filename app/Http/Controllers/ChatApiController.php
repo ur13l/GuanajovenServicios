@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Chat;
+use App\DatosUsuario;
 use App\Mensaje;
 use App\LoginToken;
 use App\Events\ChatEvent;
@@ -13,6 +14,110 @@ use LRedis;
 
 class ChatApiController extends Controller
 {
+    public function recargaListaChats(Request $request){
+        $chats = Chat::all();
+        $arr = array();
+        
+        foreach ($chats as $key => $chat) {
+            $user = $chat->usuario->datosUsuario;
+
+            $id = $chat->id_chat;
+            $ruta_imagen = $user->ruta_imagen;
+            $nombre = $user->nombre;
+            $no_leidos = $chat->contarNoLeidos();
+            
+            
+            if( count($chat->mensajes()->get()) > 0 ){
+                $ultimo_mensaje = $chat->ultimoMensaje()->mensaje;
+                $fecha_ultimo = $chat->ultimoMensaje()->created_at->format('d/m/Y') == \Carbon\Carbon::now("America/Mexico_City")->format('d/m/Y') ? $chat->ultimoMensaje()->created_at->format('H:i') :
+                        $chat->ultimoMensaje()->created_at->format('d/m/Y');
+                $order = $chat->ultimoMensaje()->id_mensaje;   
+            }else{
+                $order = 0;
+                $ultimo_mensaje = "";
+                $fecha_ultimo = "";
+            }
+
+            array_push($arr, array(
+                'order' => $order, 
+                'id' => $id, 
+                'ruta_imagen' => $ruta_imagen,
+                'nombre' => $nombre,
+                'ultimo_mensaje' => $ultimo_mensaje,
+                'fecha_ultimo' => $fecha_ultimo,
+                'no_leidos' => $no_leidos 
+                ) 
+            );
+        }
+
+        rsort($arr);
+        
+        return response()->json($arr);
+
+    }
+
+    public function buscarUsuarios(Request $request){
+      $nombre = $request->busqueda;
+
+
+      $users = DatosUsuario::where('nombre',$nombre)
+                ->orWhere('nombre', 'like', '%' . $nombre . '%')
+                ->select('nombre','id_usuario','ruta_imagen')
+                ->orderBy('nombre')
+                ->get();
+
+      $items = array();
+
+      foreach ($users as $user) {
+           $chat = Chat::where('id_usuario', $user->id_usuario)->get()->first();
+           $chat_id = null;
+           $ultimo_mensaje = "";
+           $no_leidos = "";
+           $fecha_ultimo = "";
+
+           if(isset($chat)){
+                $chat_id = $chat->id_chat;
+
+                if( $chat->ultimoMensaje() ){
+                    $ultimo_mensaje = $chat->ultimoMensaje()->mensaje;
+                    $no_leidos = $chat->contarNoLeidos();
+
+                    $fecha_ultimo = $chat->ultimoMensaje()->created_at->format('d/m/Y') == \ Carbon\Carbon::now("America/Mexico_City")->format('d/m/Y') ?
+                        $chat->ultimoMensaje()->created_at->format('H:i') :
+                        $chat->ultimoMensaje()->created_at->format('d/m/Y');
+                }
+           }
+
+           $item = array(
+                'user_id' => $user->id_usuario,
+                'nombre' => $user->nombre,
+                'ruta_imagen' => $user->ruta_imagen,
+                'chat_id'   => $chat_id,
+                'ultimo_mensaje' => $ultimo_mensaje,
+                'no_leidos' => $no_leidos,
+                'fecha_ultimo' => $fecha_ultimo
+           );
+
+           array_push($items, $item);
+      }
+
+      return response()->json($items);
+    }
+
+
+
+    public function nuevoChat(Request $request){
+        $chat = Chat::where('id_usuario', $request->user_id)->get()->first();
+        if(!isset($chat)) {
+            $chat = Chat::create(array(
+                'id_usuario' => $request->user_id
+            ));
+        }
+
+        return $chat->id_chat;
+    }
+
+
 
     public function enviar(Request $request) {
         $user = Auth::guard('api')->user();
@@ -29,18 +134,6 @@ class ChatApiController extends Controller
             'envia_usuario' => true,
             'visto' => false
         ));
-
-        $tokens = LoginToken::where('os', 'web')->pluck('device_token')->toArray();
-        //Generación del mensaje.
-                $message = array(
-                    'title' => "Nuevo mensaje",
-                    'body' => $mensaje->mensaje,
-                    'link_url' => "chat",
-                    'sound' => 'default',
-                    'priority' => 'high',
-                    'category' => 'URL_CATEGORY',
-                    'tag' => "chat");
-        NotificationsUtils::sendNotification($tokens, $message, 'data');
 
         $redis = LRedis::connection();
         $msArray = array(
@@ -73,6 +166,7 @@ class ChatApiController extends Controller
      public function mensajesAdmin (Request $request) {
         $user = Auth::guard('api')->user();
         $chat = Chat::find($request->id_chat);
+        $chat->todosLeidos();
         return response()->json(
              $chat->mensajes()->orderBy('created_at', 'desc')->paginate(20)
             );
@@ -81,7 +175,7 @@ class ChatApiController extends Controller
 
 
 
-    
+
     public function enviarAdmin(Request $request) {
         $user = Auth::guard('api')->user();
         $chat = Chat::find($request->active_chat);
@@ -96,6 +190,7 @@ class ChatApiController extends Controller
         $tokens = LoginToken::where('id_usuario', $chat->id_usuario)->pluck('device_token')->toArray();
 
 
+
         //Generación del mensaje.
                 $message = array(
                     'title' => "Nuevo mensaje",
@@ -107,15 +202,15 @@ class ChatApiController extends Controller
                     'content_available' => true,
                     'tag' => "chat");
 
+        if( count($tokens) > 0 ){
+            $dispositivo = LoginToken::where('device_token',$tokens[0])->get()->first();
 
-  $dispositivo = LoginToken::where('device_token',$tokens[0])->get()->first();
-
-
-    if($dispositivo->os == "ios"){
-       NotificationsUtils::sendNotification($tokens, $message, 'notification');
-    }else{
-      NotificationsUtils::sendNotification($tokens, $message, 'data');
-    }
+            if($dispositivo->os == "ios"){
+               NotificationsUtils::sendNotification($tokens, $message, 'notification');
+            }else{
+              NotificationsUtils::sendNotification($tokens, $message, 'data');
+            }
+        }
 
         return response()->json(array(
             'success' => true,
@@ -123,5 +218,40 @@ class ChatApiController extends Controller
             'data' => true,
             'errors' => []
         ));
+    }
+
+
+    function getChat(Request $request){
+        $chat_id = $request->chat_id;
+        $chat = Chat::find($chat_id);
+
+        if( isset($chat) ){
+            $user = $chat->usuario->datosUsuario;
+            $ultimo_mensaje = "";
+            $no_leidos = 0;
+            $fecha_ultimo = "";
+
+            if( $chat->ultimoMensaje() ){
+                $ultimo_mensaje = $chat->ultimoMensaje()->mensaje;
+                $no_leidos = $chat->contarNoLeidos();
+
+                $fecha_ultimo = $chat->ultimoMensaje()->created_at->format('d/m/Y') == \ Carbon\Carbon::now("America/Mexico_City")->format('d/m/Y') ?
+                    $chat->ultimoMensaje()->created_at->format('H:i') :
+                    $chat->ultimoMensaje()->created_at->format('d/m/Y');
+            }
+
+                return array(
+                     'user_id' => $user->id_usuario,
+                    'nombre' => $user->nombre,
+                    'ruta_imagen' => $user->ruta_imagen,
+                    'chat_id'   => $chat_id,
+                    'ultimo_mensaje' => $ultimo_mensaje,
+                    'no_leidos' => $no_leidos,
+                    'fecha_ultimo' => $fecha_ultimo
+                );
+        }else{
+            return null;
+        }
+
     }
 }

@@ -38,4 +38,8 @@ class Evento extends Model {
     public function scopeProximos($query) {
         return $query->orderBy('fecha_inicio', 'desc');
     }
+
+    public function usuarios() {
+        return $this->belongsToMany('App\User', 'usuario_evento', 'id_evento', 'id_usuario');
+    }
 }

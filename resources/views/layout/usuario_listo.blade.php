@@ -11,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!--<![endif]-->
 
-    <title>Confirmed, you’re on the Twist beta waitlist!</title>
+    <title>Registro exitoso - Guanajoven</title>
 
 
     <!-- Normalize Styles -->
@@ -221,7 +221,7 @@
                                         <tbody><tr>
                                             <td class="" style="padding: 20px 0; text-align: center; ;">
 
-                                                <img alt="error" class=" " src="https://d30y9cdsu7xlg0.cloudfront.net/png/122433-200.png" style="border: 0; height: auto; max-width: 100%; vertical-align: middle; ;" width="200">
+                                                <img alt="error" class=" " src="{{url('/img/logo_guanajoven.png')}}" style="border: 0; height: auto; max-width: 100%; vertical-align: middle; ;" width="200">
 
                                             </td>
                                         </tr>
@@ -236,28 +236,11 @@
 
                                                 <center>
 
-                                                <p style="margin: 20px 0;; font-size: 14px; mso-line-height-rule: exactly; line-height: 24px; margin: 30px 0;; ;">
+                                                    <p style="margin: 20px 0;; font-size: 14px; mso-line-height-rule: exactly; line-height: 24px; margin: 30px 0;; ;">
 
-                                                    <span style="font-weight: bold;;">Nuevo registro para {{ $tipo }}}: {{ $titulo }}</span>
+                                                        <span style="font-weight: bold;;">No te preocupes, ya habias sido registrado a {{ $titulo }} antes!</span>
 
-                                                </p>
-
-                                                <p style="margin: 20px 0;; font-size: 14px; mso-line-height-rule: exactly; line-height: 24px; margin: 30px 0;; ;">
-
-
-
-                                                    Con el usuario: {{ $curp_usuario }}
-
-
-
-                                                </p>
-
-
-
-                                                <p style="margin: 20px 0;; font-size: 14px; mso-line-height-rule: exactly; line-height: 24px; margin: 30px 0;; ;">
-                                                    Para mas información:  guanajoven@gmail.com
-                                                </p>
-
+                                                    </p>
 
                                                 </center>
 

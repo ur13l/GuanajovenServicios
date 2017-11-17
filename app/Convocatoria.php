@@ -34,4 +34,8 @@ class Convocatoria extends Model
     public function documentos(){
         return $this->hasMany('App\Documento', 'id_convocatoria')->with('formato');
     }
+
+    public function usuarios() {
+        return $this->belongsToMany('App\User', 'usuario_convocatoria', 'id_convocatoria', 'id_usuario');
+    }
 }

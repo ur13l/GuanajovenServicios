@@ -9,21 +9,23 @@ namespace App\Http\Controllers;
 
 
 use App\Convocatoria;
+use App\User;
 use App\Documento;
 use App\Formato;
 use App\Utils\FileUtils;
+use Mail;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 
 class ConvocatoriasController extends Controller {
-    use ValidatesRequests;
+    //use ValidatesRequests;
 
     /**
      * Requerir logueo para las rutas que impliquen el módulo de usuarios
      * UsuariosController constructor.
      */
     public function __construct() {
-        $this->middleware('auth.web');
+        //$this->middleware('auth.web');
     }
 
     /**
@@ -197,6 +199,45 @@ class ConvocatoriasController extends Controller {
         return redirect('/convocatorias/editar/'.$convocatoria->id_convocatoria);
     }
 
+
+    /**
+     * Devuelve la vista que se abre a partir del correo enviado.
+     * @param Request $request
+     * @return Response
+     */
+    public function registrada(Request $request) {
+        $id_usuario = $request->id_usuario;
+        $id_convocatoria = $request->id_convocatoria;
+        $curp_usuario = $request->curp_usuario;
+        $nombre_convocatoria = $request->nombre_convocatoria;
+        $convocatoria = Convocatoria::find($id_convocatoria);
+        $usuario = User::find($id_usuario);
+
+        if ($convocatoria->usuarios->contains($usuario)) {
+            return view('layout.usuario_listo', ['titulo' => $nombre_convocatoria]);
+        } else {
+            return $this->enviarCorreoGuanajoven($usuario, $convocatoria, $curp_usuario, $nombre_convocatoria);
+        }
+    }
+
+    /*************** FUNCIONES PRIVADAS ********************/
+
+    private function enviarCorreoGuanajoven($usuario, $convocatoria,$curp_usuario, $nombre_convocatoria) {
+        $convocatoria->usuarios()->attach($usuario->id);
+
+        Mail::send('correos.notificacion_enviada',
+            //variables para la vista
+            ['curp_usuario' => $curp_usuario, 'titulo' => $nombre_convocatoria, 'tipo' => 'la convocatoria', 'logo' => url('/img/logo_guanajoven.png')],
+
+            function ($message) use ($usuario, $curp_usuario, $nombre_convocatoria) {
+            //Desde donde llega el mensaje
+            $message->from('guanajoven@gmail.com', 'Guanajoven');
+            //Mensaje para el usuario
+            $message->to( $usuario->email, 'Administrador')->subject('Nuevo registro a convocatoria: '.$nombre_convocatoria);
+        });
+
+        return view('layout.usuario_registrado', ['titulo' => $nombre_convocatoria]);
+    }
 
 
 }

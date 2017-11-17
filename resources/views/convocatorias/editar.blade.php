@@ -64,12 +64,12 @@
                     <label for="descripcion">Descripción</label>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input id="fecha_inicio" name="fecha_inicio" value="{{ explode(' ', $convocatoria->fecha_inicio)[0]}}" type="date" class="datepicker">
-                    <label for="fecha_inicio">Fecha de Apertura</label>
+                    <input id="fecha_inicio" name="fecha_inicio" value="{{ explode(' ', $convocatoria->fecha_inicio)[0]}}"  class="datepicker">
+                    <label for="fecha_inicio" class="active">Fecha de Apertura</label>
                 </div>
                 <div class="input-field col s12 m6">
-                    <input id="fecha_cierre" name="fecha_cierre" value="{{explode(' ', $convocatoria->fecha_cierre)[0]}}" type="date" class="datepicker">
-                    <label for="fecha_cierre">Fecha de Cierre</label>
+                    <input id="fecha_cierre" name="fecha_cierre" value="{{explode(' ', $convocatoria->fecha_cierre)[0]}}"  class="datepicker">
+                    <label for="fecha_cierre" class="active">Fecha de Cierre</label>
                 </div>
             </div>
                 <div class="divider"></div>

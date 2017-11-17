@@ -32,10 +32,10 @@ class ConvocatoriaNotification extends Notification
 
     public function toMail($notifiable)
     {
-        $id_usuario = $this->datos_usuario->getAttributeValue('id_usuario');
-        $id_convocatoria = $this->convocatoria->getAttributeValue('id_convocatoria');
-        $curp_usuario = $this->datos_usuario->getAttributeValue('curp');
-        $nombre_convocatoria = $this->convocatoria->getAttributeValue('titulo');
+        $id_usuario = $this->datos_usuario->id_usuario;
+        $id_convocatoria = $this->convocatoria->id_convocatoria;
+        $curp_usuario = $this->datos_usuario->curp;
+        $nombre_convocatoria = $this->convocatoria->titulo;
 
 
         $data = array('id_usuario' => $id_usuario , 'id_convocatoria' => $id_convocatoria , 'curp_usuario' => $curp_usuario , 'nombre_convocatoria' => $nombre_convocatoria);
@@ -49,10 +49,8 @@ class ConvocatoriaNotification extends Notification
                     ->line('Hemos visto que estas interesado en la convocatoria: '.$this->convocatoria->getAttributeValue('titulo').'.')
                     ->line('Con fechas del: '. $fecha_inicio.' al '. $fecha_cierre .'.')
                     ->line('Si estas de acuerdo con ello, favor de oprimir el boton de aceptar, caso contrario has caso omiso a este mensaje.')
-            //ingresamos a la url correspondiente con los parametros
-
+                    //ingresamos a la url correspondiente con los parametros
                     ->action('Aceptar', route('convocatoria.registrada', array('id_usuario' => $id_usuario , 'id_convocatoria' => $id_convocatoria , 'curp_usuario'  => $this->datos_usuario->getAttributeValue('curp') , 'nombre_convocatoria' => $nombre_convocatoria)))
-
                     ->line('Gracias por usar nuestra aplicación!');
 
     }
