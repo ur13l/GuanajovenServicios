@@ -32,6 +32,7 @@
         </div>
     </div>
 @include('jovenes.lista')
+
     <!--Modal para eliminar joven-->
     <div id="modal-borrar" class="modal">
         <form action="{{url('/jovenes/borrar')}}" method="post">

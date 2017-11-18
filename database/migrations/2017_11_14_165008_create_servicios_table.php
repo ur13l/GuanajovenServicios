@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTablePuesto extends Migration
+class CreateServiciosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateTablePuesto extends Migration
      */
     public function up()
     {
-        Schema::table('puesto', function (Blueprint $table) {
-            $table->increments('id');
-
-            $table->integer('id_area')->unsigned();
-            $table->string('nombre');
-            $table->string('clave');
-
-            $table->foreign('id_area')->references('id')->on('area');
-
+        Schema::create('servicio', function (Blueprint $table) {
+            $table->increments('id_servicio');
+            $table->string('titulo', 80);
+            $table->string('descripcion', 500);
+            $table->boolean('estatus');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,8 +30,6 @@ class CreateTablePuesto extends Migration
      */
     public function down()
     {
-        Schema::table('puesto', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('servicio');
     }
 }

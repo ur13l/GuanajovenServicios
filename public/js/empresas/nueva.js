@@ -1,10 +1,29 @@
 $(function() {
+  //Evita que los campos Date se empalmen
+    $('.datepicker').change(function(){
+        var input = $(this);
+        var label = $('[for='+input.attr('id')+']');
+
+        if( input.val().length > 0 ){
+          label.addClass('active');
+        }else {
+          label.removeClass('active');
+        }
+    });
+
+    $("#agrega-promocion").click(function() {
+        $("#addPromocion").openModal();
+    });
+
+
   //Necesario para sustituir el select común de HTML5 por el de Materialize
    $('select').material_select();
     //Validación de formulario para nueva convocatoria
     $("#form-crear").validate({
         submitHandler: function(form) {
-            form.submit();
+          $("#fecha_inicio").val(moment($("#fecha_inicio").val(), "DD MMM, YYYY").format("YYYY-MM-DD"));
+          $("#fecha_fin").val(moment($("#fecha_fin").val(), "DD MMM, YYYY").format("YYYY-MM-DD"));
+          form.submit();
         },
 
         rules: {

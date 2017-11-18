@@ -6,7 +6,7 @@
 
 @section('head')
     <script type="text/javascript" src="{{url('/js/jquery.validate.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/joven/index.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/usuarios/index.js')}}"></script>
 @endsection
 
 @section('cabecera')

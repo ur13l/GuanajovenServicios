@@ -47,7 +47,7 @@ $(function() {
             imagen: "Este campo es obligatorio",
             documentos: "Este campo es obligatorio",
         },
-        errorElement : 'div',+
+        errorElement : 'div',
         errorPlacement: function(error, element) {
             var placement = $(element).data('error');
             $(element).addClass('invalid');

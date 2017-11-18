@@ -1,9 +1,15 @@
 $(function() {
 
-    $(".fecha_inicio").text(moment($(this).text(), "YYYY-MM-DD").format("DD MMMM, YYYY"));
-    $(".fecha_fin").text(moment($(this).text(), "YYYY-MM-DD").format("DD MMMM, YYYY"));
+    $.each($(".fecha_inicio"), function(index, val) {
+      $(val).text(moment($(val).text(), "YYYY-MM-DD").format("DD MMMM, YYYY"));
+    });
+
+    $.each($(".fecha_fin"), function(index, val) {
+      $(val).text(moment($(val).text(), "YYYY-MM-DD").format("DD MMMM, YYYY"));
+    });
 
 
+    //Muesta el modal con el formulario lleno de informacion para editar
     $(".editar-button").click(function() {
         id_promocion = $($(this).parent().siblings()[0].children[0]).val();
         codigo_promocion = $($(this).parent().siblings()[0].children[1]).val();
@@ -27,33 +33,28 @@ $(function() {
     });
 
 
-
-
-
-
-
     //Necesario para sustituir el select común de HTML5 por el de Materialize
     $('select').material_select();
 
 
-
-    $("#agrega-promocion").click(function() {
-        $("#addPromocion").openModal();
-
-    });
-
-
     $(".datepicker").change(function() {
+        $(this).val(moment($(this).val(), "DD MMMM, YYYY").format("DD MMMM, YYYY"));
+        var input = $(this);
+        var label = $('[for='+input.attr('id')+']');
 
-        $(this).val(moment($(this).val(), "DD MMMM, YYYY").format("DD MMMM, YYYY"))
-    })
+        if( input.val().length > 0 ){
+          label.addClass('active');
+        }else {
+          label.removeClass('active');
+        }
+    });
 
     //Validación de formulario para nueva convocatoria
     $("#form-editar").validate({
         submitHandler: function(form) {
-            $("#editfecha_inicio").val(moment($("#editfecha_inicio").val(), "DD MMMM, YYYY").format("YYYY-MM-DD"));
-            $("#editfecha_fin").val(moment($("#editfecha_fin").val(), "DD MMMM, YYYY").format("YYYY-MM-DD"));
-            form.submit();
+        $("#editfecha_inicio").val(moment($("#editfecha_inicio").val(), "DD MMM, YYYY").format("YYYY-MM-DD"));
+        $("#editfecha_fin").val(moment($("#editfecha_fin").val(), "DD MMM, YYYY").format("YYYY-MM-DD"));
+        form.submit();
         },
 
         rules: {

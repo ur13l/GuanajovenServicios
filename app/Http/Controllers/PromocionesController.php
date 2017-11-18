@@ -105,6 +105,7 @@ class PromocionesController  extends Controller{
       $promocion->codigo_promocion = $request->input('editcodigo_promocion');
       $promocion->url_promocion = $request->input('editurl_promocion');
       $promocion->save();
+
       return redirect('/empresas/editar/'.$id_empresa);
     }
 

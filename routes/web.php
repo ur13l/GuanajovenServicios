@@ -22,6 +22,8 @@ Route::get('/usuarios/logout', 'Auth\LoginController@getlogout');
 
 Route::get('/usuarios/nuevo', 'UsuariosController@nuevo');
 
+Route::get('/usuarios/buscar', 'UsuariosController@buscar');
+
 Route::post('/usuarios/registrar', 'UsuariosController@registrar');
 
 Route::post('/usuarios/curp', 'UserApiController@obtenerCurp');

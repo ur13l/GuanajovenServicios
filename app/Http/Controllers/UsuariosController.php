@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use PhpParser\Node\Scalar\MagicConst\Dir;
 use DB;
 use Validator;
+use Illuminate\Support\Facades\View;
 
 class UsuariosController extends Controller{
 
@@ -176,5 +177,35 @@ class UsuariosController extends Controller{
             return redirect('/usuarios');
         }
     }
+
+    /**
+     * Función para buscar usuarios.
+     * @param Request $request
+     * @return Response
+     */
+    public function buscar(Request $request){
+        $q = $request->q;
+        $columna = $request->columna ?: 'usuario.id';
+        $tipo = $request->tipo ?: 'asc';
+        $usuarios = Funcionario::leftJoin('usuario', 'usuario.id', '=', 'funcionario.id_usuario')
+          -> leftJoin('datos_usuario', 'usuario.id', '=', 'datos_usuario.id_usuario')
+          -> leftJoin('rol', 'funcionario.id_rol', '=', 'rol.id')
+          -> leftJoin('puesto', 'funcionario.id_puesto', '=', 'puesto.id')
+          -> where('estatus', 1)
+        ->where(function ($query) use ($q){
+          $query -> where('usuario.id', 'like', "%$q%")
+                 -> orWhere('datos_usuario.nombre', 'like', "%$q%")
+                 -> orWhere('apellido_paterno', 'like', "%$q%")
+                 -> orWhere('apellido_materno', 'like', "%$q%")
+                 -> orWhere('curp', 'like', "%$q%")
+                 -> orWhere('email', 'like', "%$q%")
+                 -> orWhere('funcionario.telefono', 'like', "%$q%")
+                 -> orWhere('rol.nombre_vista', 'like', "%$q%")
+                 -> orWhere('puesto.nombre', 'like', "%$q%");
+        })
+        ->orderBy($columna, $tipo)
+        ->paginate(20);      
+        return View::make('usuarios.lista')->with('usuarios', $usuarios)->render();      
+      }
     
 }

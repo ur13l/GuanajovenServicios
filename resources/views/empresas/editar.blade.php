@@ -11,13 +11,14 @@
 @section('head')
     <script type="text/javascript" src="{{url('/js/jquery.validate.js')}}"></script>
     <script src="{{url('/js/empresas/editar.js')}}"></script>
+    <script src="{{url('/js/empresas/nueva.js')}}"></script>
 @endsection
 
 @section('contenedor')
 
     <div id="editPromocion" class="modal">
         <div class="modal-content">
-            <h4>Agrega una promoción</h4>
+            <h4>Editar una promoción</h4>
             <div class="row">
                 <form id="form-editar" method="post" action="{{url('/promociones/editar')}}" class="col s12" enctype="multipart/form-data">
                 <div class="input-field col s12">
@@ -62,7 +63,7 @@
         <div class="modal-content">
             <h4>Agrega una promoción</h4>
             <div class="row">
-                <form id="form-editar" method="post" action="{{url('/promociones/nueva')}}" class="col s12" enctype="multipart/form-data">
+                <form id="form-crear" method="post" action="{{url('/promociones/nueva')}}" class="col s12" enctype="multipart/form-data">
                 <div class="input-field col s12">
                     <input id="id_empresa" name="id_empresa" type="hidden" value="{{$empresa->id_empresa}}" class="validate">
                       <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
@@ -237,7 +238,7 @@
                   <td class="fecha_inicio">{{$promocion->fecha_inicio}}</td>
                   <td class="fecha_fin">{{$promocion->fecha_fin}}</td>
                   <!--href="{{url('/empresas/editarPromocion/'.$promocion->id_promocion)}}"-->
-                  <td> <a class="btn-floating halfway-fab waves-effect waves-light accent-color editar-button"  id="editar-button"><i class="material-icons">mode_edit</i></a></td>
+                  <td> <a class="btn-floating halfway-fab waves-effect waves-light accent-color editar-button"><i class="material-icons">mode_edit</i></a></td>
                     <td><a href="{{url('/promociones/eliminarPromocion/'.$promocion->id_promocion.'/'.$empresa->id_empresa)}}" class="btn-floating halfway-fab waves-effect waves-light red" id="delete-button"><i class="material-icons">clear</i></a></td>
                 </tr>
       @endforeach
