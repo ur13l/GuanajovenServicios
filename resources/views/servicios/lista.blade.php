@@ -8,11 +8,18 @@
                 <thead>
                     <tr>
                         <th class="header" data-field="datos_usuario.nombre" style="width: 150px; cursor: pointer">Joven atendido<i class="material-icons grey-text" id="arrow">{{$columna === "datos_usuario.nombre" ? ($tipo === "def" ? "unfold_more" : ($tipo === "asc" ? "expand_less" : "expand_more")) : "unfold_more"}}</i></th>
+                        <th class="header" data-field="datos_usuario.nombre" style="width: 150px; cursor: pointer">Joven atendido<i class="material-icons grey-text" id="arrow">{{$columna === "datos_usuario.nombre" ? ($tipo === "def" ? "unfold_more" : ($tipo === "asc" ? "expand_less" : "expand_more")) : "unfold_more"}}</i></th>
+                        <th class="header" data-field="datos_usuario.nombre" style="width: 150px; cursor: pointer">Joven atendido<i class="material-icons grey-text" id="arrow">{{$columna === "datos_usuario.nombre" ? ($tipo === "def" ? "unfold_more" : ($tipo === "asc" ? "expand_less" : "expand_more")) : "unfold_more"}}</i></th>
+                        <th class="header" data-field="datos_usuario.nombre" style="width: 150px; cursor: pointer">Joven atendido<i class="material-icons grey-text" id="arrow">{{$columna === "datos_usuario.nombre" ? ($tipo === "def" ? "unfold_more" : ($tipo === "asc" ? "expand_less" : "expand_more")) : "unfold_more"}}</i></th>
+                        <th class="header" data-field="datos_usuario.nombre" style="width: 150px; cursor: pointer">Joven atendido<i class="material-icons grey-text" id="arrow">{{$columna === "datos_usuario.nombre" ? ($tipo === "def" ? "unfold_more" : ($tipo === "asc" ? "expand_less" : "expand_more")) : "unfold_more"}}</i></th>
+                        <th class="header" data-field="datos_usuario.nombre" style="width: 150px; cursor: pointer">Joven atendido<i class="material-icons grey-text" id="arrow">{{$columna === "datos_usuario.nombre" ? ($tipo === "def" ? "unfold_more" : ($tipo === "asc" ? "expand_less" : "expand_more")) : "unfold_more"}}</i></th>
+                        <th class="header" data-field="datos_usuario.nombre" style="width: 150px; cursor: pointer">Joven atendido<i class="material-icons grey-text" id="arrow">{{$columna === "datos_usuario.nombre" ? ($tipo === "def" ? "unfold_more" : ($tipo === "asc" ? "expand_less" : "expand_more")) : "unfold_more"}}</i></th>
+                        <th class="header" data-field="datos_usuario.nombre" style="width: 150px; cursor: pointer">Joven atendido<i class="material-icons grey-text" id="arrow">{{$columna === "datos_usuario.nombre" ? ($tipo === "def" ? "unfold_more" : ($tipo === "asc" ? "expand_less" : "expand_more")) : "unfold_more"}}</i></th>
                         <th class="header" data-field="datos_usuario.curp" style="width: 100px; cursor: pointer">CURP<i class="material-icons grey-text">{{$columna === "datos_usuario.curp" ? ($tipo === "def" ? "unfold_more" : ($tipo === "asc" ? "expand_less" : "expand_more")) : "unfold_more"}}</i></th>
                         <th class="header" data-field="usuario.email" style="width: 100px; cursor: pointer">Correo electrónico<i class="material-icons grey-text">{{$columna === "usuario.email" ? ($tipo === "def" ? "unfold_more" : ($tipo === "asc" ? "expand_less" : "expand_more")) : "unfold_more"}}</i></th>
                         <th data-field="editar">Editar</th>
                         <th data-field="eliminar">Eliminar</th>
-                    </tr>
+                    </tr>   
                 </thead>
                 <tbody id="tabla-usuarios">
                         @foreach($usuarios as $user)
