@@ -7,6 +7,7 @@
 @section('head')
     <script type="text/javascript" src="{{url('/js/jquery.validate.js')}}"></script>
     <script type="text/javascript" src="{{url('/js/servicio/nuevo.js')}}"></script>
+    <script type="text/javascript" src="{{url('/js/jquery.autocomplete.js')}}"></script>
 
 @endsection
 
@@ -24,34 +25,37 @@
     @endforeach
     <form id="form-ns" method="post" action="{{url('/servicio/registrar')}}" class="col s12" enctype="multipart/form-data">
         <!--Editar nombres según BD -->
+      
         <div class="row">
             <div class="input-field col s12 m3">
-                <input id="capturista" name="capturista" type="text" class="validate">
-                <label for="capturista">Capturista</label>
+                <select id="id_region" class="select-wrapper validate" name="id_region">
+                    @foreach($regiones as $region) 
+                        <option value="{{$region->id}}">{{$region->nombre}}</option>
+                    @endforeach
+                </select>
+                <label>Región responsable</label>
             </div>
             <div class="input-field col s12 m3">
-                <input id="id_orden" name="id_orden" type="text" class="validate">
-                <label for="id_orden">Id. Orden</label>
+                <select id="id_centro_poder_joven" class="select-wrapper validate" name="id_centro_poder_joven">
+                    @foreach($centros as $centro) 
+                        <option value="{{$centro->id_centro_poder_joven}}">{{$centro->nombre}}</option>
+                    @endforeach
+                </select>
+                <label for="id_centro_poder_joven">Centro Poder Joven</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12 m3">
-                <input id="region_responsable" name="region_responsable" type="text" class="validate">
-                <label for="region_responsable">Región responsable</label>
+                <select id="id_area" class="select-wrapper validate" name="id_area">
+                    @foreach($areas as $area) 
+                        <option value="{{$area->id_area}}">{{$area->nombre}}</option>
+                    @endforeach
+                </select>
+                <label for="id_area">Área responsable</label>
             </div>
             <div class="input-field col s12 m3">
-                <input id="centro_poder_joven" name="centro_poder_joven" type="text" class="validate">
-                <label for="centro_poder_joven">Centro Poder Joven</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12 m3">
-                <input id="area_responsable" name="area_responsable" type="text" class="validate">
-                <label for="area_responsable">Área responsable</label>
-            </div>
-            <div class="input-field col s12 m3">
-                <input id="usuario_responsable" name="usuario_responsable" type="text" class="validate">
-                <label for="usuario_responsable">Usuario responsable</label>
+                <input id="id_usuario_responsable" name="id_usuario_responsable" class="autocomplete" data-activates="singleDropdown" data-beloworigin="true" type="text" class="validate">
+                <label for="id_usuario_responsable">Usuario responsable</label>
             </div>
         </div>
         <div class="row">

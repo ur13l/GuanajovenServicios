@@ -24,7 +24,6 @@
         <script type="text/javascript" src="{{url('/js/jquery.twbsPagination.min.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/nouislider.min.js')}}"></script>
         <script type="text/javascript" src="{{url('/js/jquery.twbsPagination.min.js')}}"></script>
-        <script type="text/javascript" src="{{url('js/jquery.materialize-autocomplete.js')}}"></script>
         <!--<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>-->
         <script type="text/javascript">
             $(document).ready(function(){

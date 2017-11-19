@@ -5,16 +5,16 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class OrdenAtencion extends Model
-{
+{   
     /**
      * @var string
      */
-    protected $primaryKey = 'id_centro_poder_joven';
+    protected $primaryKey = 'id_orden_atencion';
     
     /**
      * @var string
      */
-    protected $table = 'centro_poder_joven';
+    protected $table = 'orden_atencion';
 
 
     /**
@@ -24,6 +24,7 @@ class OrdenAtencion extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+        'fecha_inicio',
         'fecha_propuesta',
         'fecha_resolucion'
     ];
@@ -54,42 +55,42 @@ class OrdenAtencion extends Model
      * Relación de área de orden de atención
      */
     public function area() {
-        $this->hasOne('App\Area', 'id_area');
+        return $this->belongsTo('App\Area', 'id_area');
     }
 
     /**
      * Relación de usuario que captura la orden
      */
     public function usuarioCaptura() {
-        $this->hasOne('App\User', 'id_usuario_captura');
+        return $this->belongsTo('App\User', 'id_usuario_captura');
     }
 
     /**
      * Relación de servicio con órdenes de atención.
      */
     public function usuarioResponsable() {
-        return $this->hasOne('App\User', 'id_usuario_responsable');
+        return $this->belongsTo('App\User', 'id_usuario_responsable');
     }
 
     /**
      * Relación de joven responsable de la orden
      */
     public function jovenResponsable() {
-        return $this->hasOne('App\User', 'id_joven_responsable');
+        return $this->belongsTo('App\User', 'id_joven_responsable');
     }
 
     /**
      * Relación de región a la que corresponde la orden
      */
     public function region() {
-        return $this->hasOne('App\Region', 'id_region');
+        return $this->belongsTo('App\Region', 'id_region');
     }
 
     /**
      * Relación de centro poder joven con la orden.
      */
     public function centroPoderJoven() {
-        return $this->hasOne('App\CentroPoderJoven', 'id_centro_poder_joven');
+        return $this->belongsTo('App\CentroPoderJoven', 'id_centro_poder_joven');
     }
 
     /**
@@ -118,5 +119,22 @@ class OrdenAtencion extends Model
      */
     public function involucrados() {
         return $this->belongsToMany('App\User', 'orden_involucrados', 'id_orden_atencion', 'id_usuario');
+    }
+
+    /**
+     * Devuelve el status correspondiente
+     *
+     * @return void
+     */
+    public function estatus() {
+        switch($this->estatus) {
+            case 1: 
+                return "Abierto";
+            case 2:
+                return "Cerrado";
+            default:
+                return "";
+        }
+
     }
 }
