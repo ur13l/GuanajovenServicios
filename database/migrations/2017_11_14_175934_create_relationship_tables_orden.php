@@ -13,7 +13,7 @@ class CreateRelationshipTablesOrden extends Migration
      */
     public function up()
     {
-        Schema::create('orden_servicio', function (Blueprint $table) {
+       Schema::create('orden_servicio', function (Blueprint $table) {
             $table->integer('id_orden_atencion')->unsigned();
             $table->foreign('id_orden_atencion')->references('id_orden_atencion')->on('orden_atencion');
             $table->integer('id_servicio')->unsigned();
@@ -24,14 +24,14 @@ class CreateRelationshipTablesOrden extends Migration
             $table->integer('id_orden_atencion')->unsigned();
             $table->foreign('id_orden_atencion')->references('id_orden_atencion')->on('orden_atencion');
             $table->integer('id_usuario');
-            $table->foreign('id_usuario')->references('id_usuario')->on('usuario');
+            $table->foreign('id_usuario')->references('id')->on('usuario');
         });
 
         Schema::create('orden_involucrados', function (Blueprint $table) {
             $table->integer('id_orden_atencion')->unsigned();
             $table->foreign('id_orden_atencion')->references('id_orden_atencion')->on('orden_atencion');
             $table->integer('id_usuario');
-            $table->foreign('id_usuario')->references('id_usuario')->on('usuario');
+            $table->foreign('id_usuario')->references('id')->on('usuario');
         });
     }
 
