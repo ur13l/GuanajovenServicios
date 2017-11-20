@@ -34,13 +34,14 @@
     </div>
 </div>
 @include('servicios.lista')
-<!--Modal para eliminar joven-->
-<!--<div id="modal-borrar" class="modal">
-    <form action="{{url('/jovenes/borrar')}}" method="post">
+
+<!--Modal para eliminar orden-->
+<div id="modal-borrar" class="modal">
+    <form action="{{url('/servicio/borrar')}}" method="post">
         <div class="modal-content">
             <h4>Confirmar</h4>
             <p id="delete-message">¿Desea eliminar este elemento?</p>
-            <input type="hidden" name="id_usuario" id="id_usuario">
+            <input type="hidden" name="id_orden_atencion" id="id_orden_atencion">
             <input type="hidden" name="_token" id="_token" value="{{csrf_token()}}">
         </div>
         <div class="modal-footer">
@@ -48,7 +49,7 @@
             <input type="submit" href="#" class="waves-effect waves-green btn-flat"  value="Sí" id="yesBtn"/>
         </div>
     </form>
-</div>-->
+</div>
 @endsection
 
 

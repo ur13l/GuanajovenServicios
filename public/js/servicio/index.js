@@ -1,28 +1,28 @@
 $(function () {
     
         //Funcionalidad de los botones para eliminar un joven.
-       /* $(document).on('click', '.borrar', function (e) {
+       $(document).on('click', '.borrar', function (e) {
             var btn = $(this),
                 yesButton = null,
                 id;
             $("#modal-borrar").openModal();
-            $("#id_usuario").val(btn.data('user-id'));
+            $("#id_orden_atencion").val(btn.data('orden-id'));
         });
     
         $(document).on('click', '.pagination a', function (e) {
             e.preventDefault();
             var page = $(this).attr('href').split('page=')[1];
-            getJovenes(page, $("#icon_search").val());
+            getOrdenes(page, $("#icon_search").val());
     
         });
     
-        /*$(".header").on('click', function () {
+        $(".header").on('click', function () {
             if ($(this).find('i').text() == 'arrow_drop_up') {
                 $(this).find('i').text('arrow_drop_down');
             } else {
                 $(this).find('i').text('arrow_drop_up');
             }
-        });*/
+        });
     
     
         $(document).on('click', '.header', function () {
@@ -39,11 +39,11 @@ $(function () {
             }
             columna = $(this).data('field')
     
-            getJovenes(1, $("#icon_search").val());
+            getOrdenes(1, $("#icon_search").val());
         });
     
         $("#icon_search").on("keyup paste change", function (e) {
-            getJovenes(1, $(this).val())
+            getOrdenes(1, $(this).val())
         })
     
         $(document).on('click', '.header', function(){
@@ -55,13 +55,13 @@ $(function () {
     
     });
     
-    var xhr, columna = "usuario.id", tipo = "asc";
-    function getJovenes(page, q) {
+    var xhr, columna = "fecha_inicio", tipo = "asc";
+    function getOrdenes(page, q) {
         if (xhr) {
             xhr.abort();
         }
         xhr = $.ajax({
-            url: $("#_url").val() + '/jovenes/buscar',
+            url: $("#_url").val() + '/servicios/buscar',
             data: {
                 page: page,
                 q: q,

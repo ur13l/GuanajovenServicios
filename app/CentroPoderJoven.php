@@ -9,12 +9,12 @@ class CentroPoderJoven extends Model
     /**
      * @var string
      */
-    protected $primaryKey = 'id_orden_atencion';
+    protected $primaryKey = 'id_centro_poder_joven';
     
     /**
      * @var string
      */
-    protected $table = 'orden_atencion';
+    protected $table = 'centro_poder_joven';
 
 
     /**
