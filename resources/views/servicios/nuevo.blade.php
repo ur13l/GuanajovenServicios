@@ -6,9 +6,37 @@
 
 @section('head')
     <script type="text/javascript" src="{{url('/js/jquery.validate.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/servicio/nuevo.js')}}"></script>
-    <script type="text/javascript" src="{{url('/js/jquery.autocomplete.js')}}"></script>
-
+    <script type="text/javascript" src="{{url('/js/servicio/nuevo.js')}}"></script> 
+     <style>
+        .autocomplete {
+            display: -ms-flexbox;
+            display: flex;
+        }
+        .autocomplete .ac-users {
+            padding-top: 10px;
+        }
+        .autocomplete .ac-users .chip {
+            -ms-flex: auto;
+            flex: auto;
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+        .autocomplete .ac-users .chip:last-child {
+            margin-right: 5px;
+        }
+        .autocomplete .ac-dropdown .ac-hover {
+            background: #eee;
+        }
+        .autocomplete .ac-input {
+            -ms-flex: 1;
+            flex: 1;
+            min-width: 150px;
+            padding-top: 0.6rem;
+        }
+        .autocomplete .ac-input input {
+            height: 2.4rem;
+        }
+    </style>
 @endsection
 
 @section('cabecera')
@@ -54,29 +82,40 @@
                 <label for="id_area">Área responsable</label>
             </div>
             <div class="input-field col s12 m3">
-                <input id="id_usuario_responsable" name="id_usuario_responsable" class="autocomplete" data-activates="singleDropdown" data-beloworigin="true" type="text" class="validate">
-                <label for="id_usuario_responsable">Usuario responsable</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12 m6">
-                <div class="autocomplete" id="multiple">
-                    <div class="ac-users ac-appender"></div>
+                <div class="autocomplete" id="usuario_responsable">
                         <div class="ac-input">
-                            <input type="text" id="usuarios_involucrados"  data-activates="multipleDropdown" data-beloworigin="true" class="validate" autocomplete="off">
-                            <ul id="multipleDropdown" class="dropdown-content ac-dropdown"></ul>
-                            <input type="hidden" class="validate">
+                            <input type="text" id="id_usuario_responsable_autocomplete"  placeholder="Please input some letters" data-activates="usuarioResponsableDropdown" data-beloworigin="true" autocomplete="off">
+                            <input type="hidden" id="id_usuario_responsable"  name="id_usuario_responsable" placeholder="Please input some letters" data-activates="usuarioResponsableDropdown" data-beloworigin="true" autocomplete="off">
                         </div>
-                        <input type="hidden" name="multipleHidden">
-                    </div>
-                    <label class="active" for="usuarios_involucrados">Usuarios involucrados </label>
+                        <ul id="usuarioResponsableDropdown" class="dropdown-content ac-dropdown"></ul>
                 </div>
+                <label class="active" for="id_usuario_responsable_autocomplete">Usuario responsable: </label>
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s12 m3">
-                <input id="joven_beneficiado" name="joven_beneficiado" type="text" class="validate">
-                <label for="joven_beneficiado">Joven beneficiado</label>
+             <div class="input-field col s12 ">
+                <div class="autocomplete" id="usuarios_involucrados">
+                        <div class="ac-input">
+                            <div class="ac-users"></div>
+                            <input type="text" id="id_usuarios_involucrados_autocomplete"  placeholder="Please input some letters" data-activates="usuariosInvolucradosDropdown" data-beloworigin="true" autocomplete="off">
+                        </div>
+                        <ul id="usuariosInvolucradosDropdown" class="dropdown-content ac-dropdown"></ul>
+                        <input type="hidden" id="id_usuarios_involucrados"  name="id_usuarios_involucrados">
+
+                </div>
+                <label class="active" for="id_usuarios_involucrados_autocomplete">Usuarios involucrados: </label>
+            </div>
+        </div>
+        <div class="row">
+           <div class="input-field col s12 m3">
+                <div class="autocomplete" id="joven_responsable">
+                        <div class="ac-input">
+                            <input type="text" id="id_joven_responsable_autocomplete"  placeholder="Please input some letters" data-activates="usuarioResponsableDropdown" data-beloworigin="true" autocomplete="off">
+                            <input type="hidden" id="id_joven_responsable"  name="id_joven_responsable" placeholder="Please input some letters" data-activates="usuarioResponsableDropdown" data-beloworigin="true" autocomplete="off">
+                        </div>
+                        <ul id="jovenResponsableDropdown" class="dropdown-content ac-dropdown"></ul>
+                </div>
+                <label class="active" for="id_joven_responsable_autocomplete">Joven beneficiado: </label>
             </div>
         <!-- Editar-->
             <div class="input-field col s12 m3">

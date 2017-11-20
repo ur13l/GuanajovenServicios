@@ -92,13 +92,24 @@ class ServiciosController extends Controller{
 
      
         public function usuariosAutocomplete(Request $request) {
-            $array = ["suggestions" => []];
-            $usuarios = User::all();
+            $query = $request->input('q');
+            $array = [];
+            
+            $usuarios = User::leftJoin('datos_usuario', 'usuario.id', '=', 'datos_usuario.id_usuario')
+                ->where('datos_usuario.nombre', 'like', '%'.$query.'%')
+                ->orWhere('datos_usuario.apellido_paterno', 'like', '%'.$query.'%')
+                ->orWhere('datos_usuario.apellido_materno', 'like', '%'.$query.'%')
+                ->get();
             foreach($usuarios as $usuario) {
-                    $array["suggestions"][] = ['value' => $usuario->datosUsuario->nombre, 'data' => "" . $usuario->id ];
-               
+                //if($usuario->funcionario){
+                    $array[] = ['text' => $usuario->datosUsuario->nombre ." ". $usuario->datosUsuario->apellido_paterno ." ". $usuario->datosUsuario->apellido_materno, 
+                        'id' => $usuario->id, 
+                        'highlight' => $usuario->datosUsuario->nombre ." ". $usuario->datosUsuario->apellido_paterno ." ". $usuario->datosUsuario->apellido_materno];
+                //}
             }
             return json_encode($array);
         }
+
+
  
 }
