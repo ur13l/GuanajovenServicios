@@ -15,6 +15,7 @@ class VerifyCsrfToken extends BaseVerifier
         '/usuarios/*',
         '/eventos/*',
         '/notificaciones/*',
-        '/api/*'
+        '/api/*',
+        '/servicios/usuariosautocomplete'
     ];
 }

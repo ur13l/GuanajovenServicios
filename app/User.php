@@ -99,7 +99,7 @@ class User extends Authenticatable implements CanResetPassword {
     }
 
     public function funcionario() {
-        return $this->belongsTo('App\Funcionario', 'id_usuario');
+        return $this->hasOne('App\Funcionario', 'id_usuario');
     }
 
 
