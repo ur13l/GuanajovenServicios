@@ -82,8 +82,12 @@
                 <label for="costo_estimado">Costo estimado</label>
             </div>
             <div class="input-field col s12 m3">
-                <input id="estatus" name="estatus" type="text" class="validate">
-                <label for="estatus">Estatus</label>
+                <select id="id_estatus" class="select-wrapper validate" name="id_estatus">
+                    @foreach($estatus_orden as $estatus) 
+                        <option value="{{$estatus->id_estatus}}">{{$estatus->nombre}}</option>
+                    @endforeach
+                </select>
+                <label for="id_estatus">Estatus</label>
             </div>
         </div>
 
@@ -156,13 +160,13 @@
                         <option value="{{$servicio->id_servicio}}">{{$servicio->titulo}}</option>
                     @endforeach
                 </select>
-                <label for="id_tipo_servicio">Tipo de servicio que se brinda</label>
+                <label for="id_tipo_servicio">Servicio </label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12 m6">
                 <input id="beneficiados_relacionados" name="beneficiados_relacionados" type="text" class="validate">
-                <label for="beneficiados_relacionados">Beneficiados relacionados</label>
+                <label for="beneficiados_relacionados">Jóvenes beneficiados </label>
             </div>
         </div>
         

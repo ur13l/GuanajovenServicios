@@ -100,6 +100,7 @@ Route::group(['prefix' => 'servicios'], function(){
     Route::get('/borrar', 'ServiciosController@borrar');
     Route::get('/editar/{id_orden_atencion}', 'ServiciosController@editar');
     Route::get('/usuariosautocomplete', 'ServiciosController@usuariosAutocomplete');
+    Route::get('/jovenesautocomplete', 'ServiciosController@jovenesAutocomplete');
 });
 
 //Notificaciones

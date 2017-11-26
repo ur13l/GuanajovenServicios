@@ -55,7 +55,7 @@ $(function() {
             $('#id_joven_responsable').val(item.id);
         },
         getData: function (value, callback) {
-            $.get($("#_url").val() + "/servicios/usuariosautocomplete", {q: value}).success(function(data) {
+            $.get($("#_url").val() + "/servicios/jovenesautocomplete", {q: value}).success(function(data) {
                 callback(value, JSON.parse(data));
               });
             
