@@ -41,4 +41,24 @@ $(function() {
             
         }
     });
+
+    
+    $('#id_joven_responsable_autocomplete').materialize_autocomplete({
+        multiple: {
+            enable: false
+        },
+        dropdown: {
+            el: '#jovenResponsableDropdown',
+            itemTemplate: '<li class="ac-item" data-id="<%= item.id %>" data-text=\'<%= item.text %>\'><a href="javascript:void(0)"><%= item.highlight %></a></li>'
+        },
+        onSelect: function (item) {
+            $('#id_joven_responsable').val(item.id);
+        },
+        getData: function (value, callback) {
+            $.get($("#_url").val() + "/servicios/usuariosautocomplete", {q: value}).success(function(data) {
+                callback(value, JSON.parse(data));
+              });
+            
+        }
+    });
 })

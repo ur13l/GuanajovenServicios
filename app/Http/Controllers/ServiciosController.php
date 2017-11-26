@@ -10,6 +10,7 @@ use App\OrdenAtencion;
 use Carbon\Carbon;
 use App\CentroPoderJoven;
 use App\DatosUsuario;
+use App\Servicio;
 use Illuminate\Support\Facades\View;
 
 class ServiciosController extends Controller{    
@@ -30,6 +31,28 @@ class ServiciosController extends Controller{
             return view('servicios.index', ['ordenes' => $ordenes, 'tipo' => 'def', 'columna' => '']);
          }
 
+         /**
+          * Método que devuelve la vista para generar una nueva orden de atención
+          *
+          * @return view
+          */
+         public function nuevo(){
+            $regiones = Region::all();
+            $centros = CentroPoderJoven::all();
+            $areas = Area::all();
+            $servicios = Servicio::all();
+           return view('servicios.nuevo', ['regiones' => $regiones, 
+            'centros' => $centros, 'areas' => $areas, 'servicios' => $servicios]);
+        }
+    
+        /**
+         * Se devuelve la vista de edición.
+         *
+         * @return void
+         */
+        public function editar(){
+            return view('servicios.editar');
+        }
 
          /**
           * Método para borrar una orden de atención.
@@ -79,18 +102,15 @@ class ServiciosController extends Controller{
             return View::make('servicios.lista', ['ordenes' => $ordenes, 'tipo' => $tipo, 'columna' => $columna])->render();      
           }
 
-        public function nuevo(){
-            $regiones = Region::all();
-            $centros = CentroPoderJoven::all();
-            $areas = Area::all();
-           return view('servicios.nuevo', ['regiones' => $regiones, 'centros' => $centros, 'areas' => $areas]);
-        }
-
-        public function editar(){
-            return view('servicios.editar');
-        }
+       
 
      
+        /**
+         * Método que devuelve un arreglo de usuarios con datos en funcionario.
+         *
+         * @param Request $request
+         * @return JSON
+         */
         public function usuariosAutocomplete(Request $request) {
             $query = $request->input('q');
             $array = [];
@@ -101,11 +121,37 @@ class ServiciosController extends Controller{
                 ->orWhere('datos_usuario.apellido_materno', 'like', '%'.$query.'%')
                 ->get();
             foreach($usuarios as $usuario) {
-                //if($usuario->funcionario){
+                if($usuario->funcionario){
                     $array[] = ['text' => $usuario->datosUsuario->nombre ." ". $usuario->datosUsuario->apellido_paterno ." ". $usuario->datosUsuario->apellido_materno, 
                         'id' => $usuario->id, 
                         'highlight' => $usuario->datosUsuario->nombre ." ". $usuario->datosUsuario->apellido_paterno ." ". $usuario->datosUsuario->apellido_materno];
-                //}
+                }
+            }
+            return json_encode($array);
+        }
+
+        /**
+         * Devuelve la lista de jóvenes.
+         *
+         * @param Request $request
+         * @return JSON
+         */
+        public function jovenesAutocomplete(Request $request) {
+            $query = $request->input('q');
+            $array = [];
+            
+            $usuarios = User::leftJoin('datos_usuario', 'usuario.id', '=', 'datos_usuario.id_usuario')
+                ->where('datos_usuario.fecha_nacimiento', '>', Carbon::now('America/Mexico_City')->subYears(30))
+                ->where(function ($query) use ($q){
+                    $q ->where('datos_usuario.nombre', 'like', '%'.$query.'%')
+                    ->orWhere('datos_usuario.apellido_paterno', 'like', '%'.$query.'%')
+                    ->orWhere('datos_usuario.apellido_materno', 'like', '%'.$query.'%');
+                })
+                ->get();
+            foreach($usuarios as $usuario) {
+                $array[] = ['text' => $usuario->datosUsuario->nombre ." ". $usuario->datosUsuario->apellido_paterno ." ". $usuario->datosUsuario->apellido_materno, 
+                    'id' => $usuario->id, 
+                    'highlight' => $usuario->datosUsuario->nombre ." ". $usuario->datosUsuario->apellido_paterno ." ". $usuario->datosUsuario->apellido_materno];
             }
             return json_encode($array);
         }

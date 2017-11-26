@@ -45,7 +45,7 @@
 
 @section('contenedor')
 <div class="row">
-    <h4>Nuevo Servicio</h4>
+    <h4>Nueva orden de servicio</h4>
 </div>
 <div class="row">
     @foreach($errors->all() as $error)
@@ -54,6 +54,39 @@
     <form id="form-ns" method="post" action="{{url('/servicio/registrar')}}" class="col s12" enctype="multipart/form-data">
         <!--Editar nombres según BD -->
       
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <input id="titulo" name="tíiulo" type="text" class="validate">
+                <label for="titulo">Título</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <textarea id="descripcion" name="descripcion" class="materialize-textarea"></textarea>
+                <label for="descripcion">Descripción</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m3">
+                <label for="fecha_inicio">Fecha de inicio</label>
+                <input name="fecha_inicio" id="fecha_inicio" type="text" class="datepicker">
+            </div>
+            <div class="col s12 m3">
+                <label for="fecha_propuesta">Fecha propuesta</label>
+                <input name="fecha_propuesta" id="fecha_propuesta" type="text" class="datepicker">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m3">
+                <input id="costo_estimado" name="costo_estimado" type="text" class="validate">
+                <label for="costo_estimado">Costo estimado</label>
+            </div>
+            <div class="input-field col s12 m3">
+                <input id="estatus" name="estatus" type="text" class="validate">
+                <label for="estatus">Estatus</label>
+            </div>
+        </div>
+
         <div class="row">
             <div class="input-field col s12 m3">
                 <select id="id_region" class="select-wrapper validate" name="id_region">
@@ -110,58 +143,29 @@
            <div class="input-field col s12 m3">
                 <div class="autocomplete" id="joven_responsable">
                         <div class="ac-input">
-                            <input type="text" id="id_joven_responsable_autocomplete"  placeholder="Please input some letters" data-activates="usuarioResponsableDropdown" data-beloworigin="true" autocomplete="off">
-                            <input type="hidden" id="id_joven_responsable"  name="id_joven_responsable" placeholder="Please input some letters" data-activates="usuarioResponsableDropdown" data-beloworigin="true" autocomplete="off">
+                            <input type="text" id="id_joven_responsable_autocomplete"  placeholder="Please input some letters" data-activates="jovenResponsableDropdown" data-beloworigin="true" autocomplete="off">
+                            <input type="hidden" id="id_joven_responsable"  name="id_joven_responsable" data-activates="jovenResponsableDropdown" data-beloworigin="true" autocomplete="off">
                         </div>
                         <ul id="jovenResponsableDropdown" class="dropdown-content ac-dropdown"></ul>
                 </div>
                 <label class="active" for="id_joven_responsable_autocomplete">Joven beneficiado: </label>
             </div>
-        <!-- Editar-->
             <div class="input-field col s12 m3">
-                <input id="tipo_servicio" name="tipo_servicio" type="text" class="validate">
-                <label for="tipo_servicio">Tipo de servicio que se brinda</label>
+                <select id="id_tipo_servicio" class="select-wrapper validate" name="id_tipo_servicio">
+                    @foreach($servicios as $servicio) 
+                        <option value="{{$servicio->id_servicio}}">{{$servicio->titulo}}</option>
+                    @endforeach
+                </select>
+                <label for="id_tipo_servicio">Tipo de servicio que se brinda</label>
             </div>
         </div>
-        <!-- Editar-->
         <div class="row">
             <div class="input-field col s12 m6">
                 <input id="beneficiados_relacionados" name="beneficiados_relacionados" type="text" class="validate">
                 <label for="beneficiados_relacionados">Beneficiados relacionados</label>
             </div>
         </div>
-        <div class="row">
-            <div class="input-field col s12 m6">
-                <input id="titulo" name="tíiulo" type="text" class="validate">
-                <label for="titulo">Título de orden de servicio</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12 m6">
-                <textarea id="descripcion" name="descripcion" class="materialize-textarea"></textarea>
-                <label for="descripcion">Descripción de orden de servicio</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s12 m3">
-                <label for="fecha_inicio">Fecha de inicio</label>
-                <input name="fecha_inicio" id="fecha_inicio" type="text" class="datepicker">
-            </div>
-            <div class="col s12 m3">
-                <label for="fecha_propuesta">Fecha propuesta</label>
-                <input name="fecha_propuesta" id="fecha_propuesta" type="text" class="datepicker">
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12 m3">
-                <input id="costo_estimado" name="costo_estimado" type="text" class="validate">
-                <label for="costo_estimado">Costo estimado</label>
-            </div>
-            <div class="input-field col s12 m3">
-                <input id="estatus" name="estatus" type="text" class="validate">
-                <label for="estatus">Estatus</label>
-            </div>
-        </div>
+        
 
 
         
