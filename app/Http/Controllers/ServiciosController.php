@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use App\CentroPoderJoven;
 use App\DatosUsuario;
 use App\Servicio;
+use Auth;
 use Illuminate\Support\Facades\View;
 
 class ServiciosController extends Controller{    
@@ -160,5 +161,21 @@ class ServiciosController extends Controller{
         }
 
 
+        public function registrar(Request $request) {
+            $usuario = Auth::user();
+            $orden = OrdenAtencion::create($request->all() + ['id_usuario_captura' => $usuario->id]);
+            $orden->servicios()->attach($request->id_servicio);
+
+            $usuariosRelacionados = explode(',', $request->input('id_usuarios_involucrados'));
+            foreach($usuariosRelacionados as $idU) {
+                $orden->involucrados()->attach($idU);
+            }
+
+            $beneficiadosRelacionados = explode(',', $request->input('id_beneficiados_relacionados'));
+            foreach($beneficiadosRelacionados as $idU) {
+                $orden->beneficiados()->attach($idU);
+            }
+            return redirect('/servicios');
+        }
  
 }

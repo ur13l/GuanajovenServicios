@@ -48,7 +48,7 @@ class OrdenAtencion extends Model
         'costo_real',
         'resultado',
         'observaciones',
-        'id_estatus'
+        'id_estatus',
     ];
 
     /**
