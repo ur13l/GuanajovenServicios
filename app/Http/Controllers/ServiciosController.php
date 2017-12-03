@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Region;
 use App\Area;
+use App\EstatusOrden;
 use App\OrdenAtencion;
 use Carbon\Carbon;
 use App\CentroPoderJoven;
 use App\DatosUsuario;
 use App\Servicio;
+use Auth;
 use Illuminate\Support\Facades\View;
 
 class ServiciosController extends Controller{    
@@ -41,8 +43,10 @@ class ServiciosController extends Controller{
             $centros = CentroPoderJoven::all();
             $areas = Area::all();
             $servicios = Servicio::all();
+            $estatus_orden = EstatusOrden::all();
            return view('servicios.nuevo', ['regiones' => $regiones, 
-            'centros' => $centros, 'areas' => $areas, 'servicios' => $servicios]);
+            'centros' => $centros, 'areas' => $areas, 'servicios' => $servicios,
+            'estatus_orden' => $estatus_orden]);
         }
     
         /**
@@ -142,7 +146,7 @@ class ServiciosController extends Controller{
             
             $usuarios = User::leftJoin('datos_usuario', 'usuario.id', '=', 'datos_usuario.id_usuario')
                 ->where('datos_usuario.fecha_nacimiento', '>', Carbon::now('America/Mexico_City')->subYears(30))
-                ->where(function ($query) use ($q){
+                ->where(function ($q) use ($query){
                     $q ->where('datos_usuario.nombre', 'like', '%'.$query.'%')
                     ->orWhere('datos_usuario.apellido_paterno', 'like', '%'.$query.'%')
                     ->orWhere('datos_usuario.apellido_materno', 'like', '%'.$query.'%');
@@ -157,5 +161,21 @@ class ServiciosController extends Controller{
         }
 
 
+        public function registrar(Request $request) {
+            $usuario = Auth::user();
+            $orden = OrdenAtencion::create($request->all() + ['id_usuario_captura' => $usuario->id]);
+            $orden->servicios()->attach($request->id_servicio);
+
+            $usuariosRelacionados = explode(',', $request->input('id_usuarios_involucrados'));
+            foreach($usuariosRelacionados as $idU) {
+                $orden->involucrados()->attach($idU);
+            }
+
+            $beneficiadosRelacionados = explode(',', $request->input('id_beneficiados_relacionados'));
+            foreach($beneficiadosRelacionados as $idU) {
+                $orden->beneficiados()->attach($idU);
+            }
+            return redirect('/servicios');
+        }
  
 }

@@ -48,7 +48,7 @@ class OrdenAtencion extends Model
         'costo_real',
         'resultado',
         'observaciones',
-        'estatus'
+        'id_estatus',
     ];
 
     /**
@@ -127,14 +127,6 @@ class OrdenAtencion extends Model
      * @return void
      */
     public function estatus() {
-        switch($this->estatus) {
-            case 1: 
-                return "Abierto";
-            case 2:
-                return "Cerrado";
-            default:
-                return "";
-        }
-
+        return $this->belongsTo('App\EstatusOrden', 'id_estatus');
     }
 }

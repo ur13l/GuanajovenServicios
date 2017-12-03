@@ -95,11 +95,13 @@ Route::group(['prefix' => 'jovenes'], function(){
 Route::group(['prefix' => 'servicios'], function(){
     Route::get('/', 'ServiciosController@index');
     Route::get('/nuevo', 'ServiciosController@nuevo');
+    Route::post('/registrar', 'ServiciosController@registrar');
     Route::get('/actualizar', 'ServiciosController@editar');
     Route::get('/buscar', 'ServiciosController@buscar');
     Route::get('/borrar', 'ServiciosController@borrar');
     Route::get('/editar/{id_orden_atencion}', 'ServiciosController@editar');
     Route::get('/usuariosautocomplete', 'ServiciosController@usuariosAutocomplete');
+    Route::get('/jovenesautocomplete', 'ServiciosController@jovenesAutocomplete');
 });
 
 //Notificaciones
