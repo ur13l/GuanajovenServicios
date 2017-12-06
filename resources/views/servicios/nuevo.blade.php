@@ -132,7 +132,6 @@
                 <div class="autocomplete" id="usuario_responsable">
                         <div class="ac-input">
                             <input type="text" id="id_usuario_responsable_autocomplete"  placeholder="" data-activates="usuarioResponsableDropdown" data-beloworigin="true" autocomplete="off">
-                            <input type="hidden" id="id_usuario_responsable"  name="id_usuario_responsable" placeholder="Please input some letters" data-activates="usuarioResponsableDropdown" data-beloworigin="true" autocomplete="off">
                         </div>
                         <ul id="usuarioResponsableDropdown" class="dropdown-content ac-dropdown"></ul>
                 </div>
@@ -142,7 +141,6 @@
                 <div class="autocomplete" id="joven_responsable">
                         <div class="ac-input">
                             <input type="text" id="id_joven_responsable_autocomplete"  placeholder="" data-activates="jovenResponsableDropdown" data-beloworigin="true" autocomplete="off">
-                            <input type="hidden" id="id_joven_responsable"  name="id_joven_responsable" data-activates="jovenResponsableDropdown" data-beloworigin="true" autocomplete="off">
                         </div>
                         <ul id="jovenResponsableDropdown" class="dropdown-content ac-dropdown"></ul>
                 </div>
