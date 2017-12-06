@@ -12,8 +12,9 @@ $(function() {
             el: '#usuarioResponsableDropdown',
             itemTemplate: '<li class="ac-item" data-id="<%= item.id %>" data-text=\'<%= item.text %>\'><a href="javascript:void(0)"><%= item.highlight %></a></li>'
         },
-        onSelect: function (item) {
-            $('#id_usuario_responsable').val(item.id);
+        hidden: {
+            enable: true,
+            inputName: 'id_usuario_responsable'
         },
         getData: function (value, callback) {
             $.get($("#_url").val() + "/servicios/usuariosautocomplete", {q: value}).success(function(data) {
@@ -60,8 +61,9 @@ $(function() {
             el: '#jovenResponsableDropdown',
             itemTemplate: '<li class="ac-item" data-id="<%= item.id %>" data-text=\'<%= item.text %>\'><a href="javascript:void(0)"><%= item.highlight %></a></li>'
         },
-        onSelect: function (item) {
-            $('#id_joven_responsable').val(item.id);
+        hidden: {
+            enable: true,
+            inputName: 'id_joven_responsable'
         },
         getData: function (value, callback) {
             $.get($("#_url").val() + "/servicios/jovenesautocomplete", {q: value}).success(function(data) {
