@@ -93,7 +93,7 @@
 
         <div class="row">
             <div class="input-field col s12 m6">
-                <select id="id_region" class="select-wrapper validate" name="id_region">
+                <select id="id_region" class="select-wrapper" name="id_region">
                     @foreach($regiones as $region) 
                         <option value="{{$region->id_region}}">{{$region->nombre}}</option>
                     @endforeach

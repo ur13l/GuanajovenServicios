@@ -54,8 +54,18 @@ class ServiciosController extends Controller{
          *
          * @return void
          */
-        public function editar(){
-            return view('servicios.editar');
+        public function editar($id_orden_atencion){
+           $ordenes_atencion = ordenAtencion::where("id_orden_atencion", $id_orden_atencion)->first();    
+           $regiones = Region::all(); 
+           $centros = CentroPoderJoven::all();
+           $areas = Area::all();
+           $servicios = Servicio::all();
+           
+           $estatus_orden = EstatusOrden::all();
+           $datosUsuario = DatosUsuario::all();
+            return view('servicios.editar', ['ordenes_atencion' => $ordenes_atencion, 'regiones' => $regiones,
+            'centros' => $centros, 'areas' => $areas, 'servicios' => $servicios, 'estatus_orden' => $estatus_orden,
+            'datosUsuario' => $datosUsuario]);
         }
 
          /**
@@ -177,5 +187,8 @@ class ServiciosController extends Controller{
             }
             return redirect('/servicios');
         }
+
+        
+
  
 }
