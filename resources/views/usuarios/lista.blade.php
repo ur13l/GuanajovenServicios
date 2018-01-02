@@ -26,8 +26,8 @@
                     <th class="header" data-field="rol.nombre_vista" style="width: 100px; cursor: pointer">Rol</th>
                     <th class="header" data-field="puesto.nombre_vista" style="width: 100px; cursor: pointer">Puesto
                     </th>
-                    <!--<th data-field="editar">Editar</th>
-                    <th data-field="eliminar">Eliminar</th>-->
+                    <!--<th data-field="editar">Editar</th>-->
+                    <th data-field="eliminar">Eliminar</th>
                 </tr>
                 </thead>
 
@@ -42,8 +42,8 @@
                     <td style="width: 100px">{{$user->telefono}}</td>
                     <td style="width: 100px">{{$user->rol()->nombre_vista}}</td>
                     <td style="width: 100px">{{$user->puesto()->nombre}}</td>
-                    <!--<td class="center-align"><i class="material-icons grey-text" style="cursor: pointer" data-user-id="{{$user->id}}">mode_edit</i></td>
-                            <td class="center-align"><i class="material-icons grey-text borrar" style="cursor: pointer" data-user-id="{{$user->id}}">delete</i></td>-->
+                    <!--<td class="center-align"><a href="{{url('usuarios/editar/'.$user->id_usuario)}}"><i class="material-icons grey-text" style="cursor: pointer" data-user-id="{{$user->id_usuario}}">mode_edit</i></a></td>-->
+                    <td class="center-align"><i class="material-icons grey-text borrar" style="cursor: pointer" data-user-id="{{$user->id_usuario}}">delete</i></td>
                     </tr>
                 @endforeach
                 </tbody>

@@ -37,7 +37,7 @@
 
 <!--Modal para eliminar orden-->
 <div id="modal-borrar" class="modal">
-    <form action="{{url('/servicio/borrar')}}" method="post">
+    <form action="{{url('/servicios/borrar')}}" method="post">
         <div class="modal-content">
             <h4>Confirmar</h4>
             <p id="delete-message">¿Desea eliminar este elemento?</p>

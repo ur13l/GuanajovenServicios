@@ -63,7 +63,7 @@
             
             <div class="row" id="cntr">
               <div class="input-field col s12 m6">
-                <input id="curp" name="curp" type="text" class="validate">
+                <input id="curp" name="curp" type="text" class="validate" maxlength="18" style="text-transform: uppercase">
                 <label for="curp">CURP</label>
               </div>
             </div>

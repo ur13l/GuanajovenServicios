@@ -96,9 +96,9 @@ Route::group(['prefix' => 'servicios'], function(){
     Route::get('/', 'ServiciosController@index');
     Route::get('/nuevo', 'ServiciosController@nuevo');
     Route::post('/registrar', 'ServiciosController@registrar');
-    Route::get('/actualizar', 'ServiciosController@editar');
+    Route::post('/editar', 'ServiciosController@actualizar');
     Route::get('/buscar', 'ServiciosController@buscar');
-    Route::get('/borrar', 'ServiciosController@borrar');
+    Route::post('/borrar', 'ServiciosController@borrar');
     Route::get('/editar/{id_orden_atencion}', 'ServiciosController@editar');
     Route::get('/usuariosautocomplete', 'ServiciosController@usuariosAutocomplete');
     Route::get('/jovenesautocomplete', 'ServiciosController@jovenesAutocomplete');
@@ -119,6 +119,9 @@ Route::get('/historial', 'HistorialController@index');
 Route::get('/reportes', 'ReportesController@index');
 //Usuarios
 Route::get('/usuarios', 'UsuariosController@index');
+Route::post('/usuarios/borrar', 'UsuariosController@borrar');
+Route::get('/usuarios/editar/{id_usuario}', 'UsuariosController@editar');
+Route::post('/usuarios/editar', 'UsuariosController@actualizar');
 Route::post('/usuarios/passwordactualizada', function() {
         return view('usuarios.password_actualizado');
 });

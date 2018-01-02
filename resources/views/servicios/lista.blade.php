@@ -33,7 +33,7 @@
                                 <td style="width: 150px;">{{$orden->titulo}}</td>
                                 <td style="width: 150px;">{{$orden->estatus->nombre}}</td>
                                 <td class="center-align"><a href="{{url('servicios/editar/'.$orden->id_orden_atencion)}}"><i class="material-icons grey-text editar" style="cursor: pointer" data-orden-id="{{$orden->id_orden_atencion}}">mode_edit</i></a></td>
-                            <td class="center-align"><i class="material-icons grey-text borrar" style="cursor: pointer" data-orden-id="{{$orden->id_orden_atencion}}">delete</i></td>
+                                <td class="center-align"><i class="material-icons grey-text borrar" style="cursor: pointer" data-orden-id="{{$orden->id_orden_atencion}}">delete</i></td>
                             </tr>
                         @endforeach
                 </tbody>

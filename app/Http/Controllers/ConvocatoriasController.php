@@ -154,29 +154,30 @@ class ConvocatoriasController extends Controller {
         }
 
         //Se revisan los documentos que hay que eliminar
-        $idsEliminar = \GuzzleHttp\json_decode($request->input('input-deleted-docs'));
+        $idsEliminar = json_decode($request->input('input-deleted-docs'));
         for($i = 0, $max = count($idsEliminar); $i < $max; $i++) {
             $documento = Documento::find($idsEliminar[$i]);
             $documento->delete();
         }
 
         //Se revisan los documentos que hay que actualizar
-        foreach($request->input('doc-id') as $index => $id_documento) {
-            //Se revisa si existe el documento
-            $documento = Documento::find($id_documento);
-            $titulo = $request->input('doc-titulo')[$index];
-            $file = $request->file('doc-file-' . $id_documento);
-
-            $documento->titulo = $titulo;
-            if(isset($file)) {
-                FileUtils::eliminar($documento->ruta_documento);
-                $documento->ruta_documento = FileUtils::guardar($file, 'storage/docs/', 'doc_');//Actualizando el formato
-                $formato = Formato::where('nombre',$file->getClientOriginalExtension())->get()->first();
-                $documento->id_formato = isset($formato->id_formato) ? $formato->id_formato : Formato::OTRO; //El 5 representa otro formato
+        if($request->input('doc-id')) {
+            foreach($request->input('doc-id') as $index => $id_documento) {
+                //Se revisa si existe el documento
+                $documento = Documento::find($id_documento);
+                $titulo = $request->input('doc-titulo')[$index];
+                $file = $request->file('doc-file-' . $id_documento);
+    
+                $documento->titulo = $titulo;
+                if(isset($file)) {
+                    FileUtils::eliminar($documento->ruta_documento);
+                    $documento->ruta_documento = FileUtils::guardar($file, 'storage/docs/', 'doc_');//Actualizando el formato
+                    $formato = Formato::where('nombre',$file->getClientOriginalExtension())->get()->first();
+                    $documento->id_formato = isset($formato->id_formato) ? $formato->id_formato : Formato::OTRO; //El 5 representa otro formato
+                }
+                $documento->save();
             }
-            $documento->save();
         }
-
         //Se cargan los nuevos documentos
         $titulos = $request->input('doc-titulo-nuevo');
         $files = $request->file('doc-file-nuevo');

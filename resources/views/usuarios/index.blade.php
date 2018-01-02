@@ -32,10 +32,10 @@
         </div>
     </div>
     @include('usuarios.lista')
-    <!--Modal para eliminar joven-->
-    <!--
+
+    <!--Modal para eliminar usuario-->
     <div id="modal-borrar" class="modal">
-        <form action="{{url('/jovenes/borrar')}}" method="post">
+        <form action="{{url('/usuarios/borrar')}}" method="post">
             <div class="modal-content">
                 <h4>Confirmar</h4>
                 <p id="delete-message">¿Desea eliminar este elemento?</p>
@@ -47,7 +47,7 @@
                 <input type="submit" href="#" class="waves-effect waves-green btn-flat"  value="Sí" id="yesBtn"/>
             </div>
         </form>
-    </div>-->
+    </div>
 @endsection
 
 

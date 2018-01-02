@@ -54,18 +54,71 @@ class ServiciosController extends Controller{
          *
          * @return void
          */
-        public function editar($id_orden_atencion){
-           $ordenes_atencion = ordenAtencion::where("id_orden_atencion", $id_orden_atencion)->first();    
+        public function editar($id_orden_atencion, Request $request){
            $regiones = Region::all(); 
            $centros = CentroPoderJoven::all();
            $areas = Area::all();
            $servicios = Servicio::all();
-           
+           $ordenes_atencion = OrdenAtencion::find($id_orden_atencion);    
            $estatus_orden = EstatusOrden::all();
            $datosUsuario = DatosUsuario::all();
             return view('servicios.editar', ['ordenes_atencion' => $ordenes_atencion, 'regiones' => $regiones,
             'centros' => $centros, 'areas' => $areas, 'servicios' => $servicios, 'estatus_orden' => $estatus_orden,
             'datosUsuario' => $datosUsuario]);
+        }
+
+        public function actualizar(Request $request){
+            $ordenes_atencion = OrdenAtencion::find($request->input("id_orden_atencion"));
+            $ordenes_atencion->update($request->all());
+                      
+            /*-------------------------------- Documentos --------------------------------*/
+            //Se revisan los documentos que hay que eliminar
+           /* $idsEliminar = json_decode($request->input('input-deleted-docs'));
+            for($i = 0, $max = count($idsEliminar); $i < $max; $i++) {
+                $documento = Documento::find($idsEliminar[$i]);
+                $documento->delete();
+            }
+
+            //Se revisan los documentos que hay que actualizar
+            if($request->input('doc-id')) {
+                foreach($request->input('doc-id') as $index => $id_documento) {
+                    //Se revisa si existe el documento
+                    $documento = Documento::find($id_documento);
+                    $titulo = $request->input('doc-titulo')[$index];
+                    $file = $request->file('doc-file-' . $id_documento);
+                        
+                    $documento->titulo = $titulo;
+                    if(isset($file)) {
+                        FileUtils::eliminar($documento->ruta_documento);
+                        $documento->ruta_documento = FileUtils::guardar($file, 'storage/docs/', 'doc_');//Actualizando el formato
+                        $formato = Formato::where('nombre',$file->getClientOriginalExtension())->get()->first();
+                        $documento->id_formato = isset($formato->id_formato) ? $formato->id_formato : Formato::OTRO; //El 5 representa otro formato
+                    }
+                    $documento->save();
+                }
+            }
+            
+            //Se cargan los nuevos documentos
+            $titulos = $request->input('doc-titulo-nuevo');
+            $files = $request->file('doc-file-nuevo');
+            if(isset($files)) {
+                foreach ($files as $index => $file) {
+                $rutaDoc = FileUtils::guardar($file, 'storage/docs/', 'doc_');
+                //Actualizando el formato
+                $formato = Formato::where('nombre', $file->getClientOriginalExtension())->get()->first();
+                $idFormato = isset($formato->id_formato) ? $formato->id_formato : Formato::OTRO; //El 5 representa otro formato
+                Documento::create(array(
+                        'titulo' => $titulos[$index],
+                        'ruta_documento' => $rutaDoc,
+                        'id_formato' => $idFormato,
+                        'id_convocatoria' => $convocatoria->id_convocatoria
+                    )
+                );
+            }
+        }*/
+        $ordenes_atencion->save();
+        return redirect('/servicios/editar/');
+
         }
 
          /**
@@ -82,7 +135,7 @@ class ServiciosController extends Controller{
         }     
 
         /**
-         * Búsqueda de órdenes de servicio
+         * Búsqueda de ordenes de servicio
          *
          * @param Request $request
          * @return void

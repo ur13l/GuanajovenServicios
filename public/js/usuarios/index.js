@@ -1,6 +1,6 @@
 $(function(){
 
-    //Funcionalidad de los botones para eliminar un joven.
+    //Funcionalidad de los botones para eliminar un usuario.
     $(document).on('click', '.borrar', function(e){
         var btn = $(this),
             yesButton = null,

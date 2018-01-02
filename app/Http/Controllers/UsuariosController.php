@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leonardolirabecerra
- * Date: 01/02/17
- * Time: 2:45 PM
- */
 
 namespace App\Http\Controllers;
-
 
 use App\Area;
 use App\Dependencia;
@@ -126,12 +119,14 @@ class UsuariosController extends Controller{
             //User
             $correo = $request->input("email");
             $password = $request->input("password");
+            $admin = $request->input("rol") == 2 ? 1 : 0 ;
 
             $usuario = User::create([
                 'email' => $correo,
                 'password' => $password,
                 'id_google' => null,
-                'id_facebook' => null
+                'id_facebook' => null,
+                'admin' => $admin
             ]);
 
             //Datos User
@@ -176,6 +171,36 @@ class UsuariosController extends Controller{
         } else {
             return redirect('/usuarios');
         }
+    }
+    
+    public function editar(){
+        $roles = Rol::all();
+        $permisos = Permiso::all();
+        $puestos = Puesto::all();
+        $areas = Area::all();
+        $direcciones = Direccion::all();
+        $dependencias = Dependencia::all();
+        $usuario = User::find($id_usuario);
+        $datosUsuario = DatosUsuario::where('id_usuario', $id_usuario)->first();        
+        $funcionario = Funcionario::where('id_usuario', $id_usuario)->first();        
+        return view("usuarios.editar", ['usuario' => $usuario, 'datosUsuario' => $datosUsuario,'funcionario' => $funcionario,'roles' => $roles, 'permisos' => $permisos, 'puestos' => $puestos,
+        'areas' => $areas, 'direcciones' => $direcciones, 'dependencias' => $dependencias]);
+    }
+
+    function actualizar($id_usuario){
+
+    }
+
+    
+
+    /*Función para eliminar usuario*/
+    public function borrar(Request $request){
+        $id_usuario = $request->input('id_usuario');
+        $funcionario = Funcionario::where('id_usuario',$id_usuario)->first();
+        $usuario = User::find($id_usuario);
+        $funcionario->delete();
+        $usuario->delete();
+        return redirect()->back();    
     }
 
     /**
